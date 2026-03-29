@@ -71,9 +71,9 @@ const StatusCheck = () => {
   const [result, setResult] = useState<{
     found: boolean;
     company?: {
-      inn?: string; kpp?: string; name?: string; director?: string;
-      address?: string; ogrn?: string; registrationDate?: string;
-      activity?: string; status?: string; capitalAmount?: string; employeeCount?: string;
+      inn?: string; kpp?: string; name?: string; director?: string; directorPost?: string;
+      address?: string; ogrn?: string; registrationDate?: string; liquidationDate?: string;
+      okved?: string; status?: string; opf?: string; type?: string; employeeCount?: string;
     };
     message?: string;
   } | null>(null);
@@ -158,7 +158,7 @@ const StatusCheck = () => {
                     <div className="flex items-start gap-3">
                       <User className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="text-xs text-muted-foreground">Руководитель</p>
+                        <p className="text-xs text-muted-foreground">{c.directorPost || 'Руководитель'}</p>
                         <p className="font-medium text-foreground">{c.director}</p>
                       </div>
                     </div>
@@ -210,12 +210,12 @@ const StatusCheck = () => {
                       </div>
                     </div>
                   )}
-                  {c.activity && (
+                  {c.okved && (
                     <div className="flex items-start gap-3">
                       <Briefcase className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="text-xs text-muted-foreground">Основной вид деятельности</p>
-                        <p className="text-sm text-foreground">{c.activity}</p>
+                        <p className="text-xs text-muted-foreground">Основной ОКВЭД</p>
+                        <p className="text-sm text-foreground">{c.okved}</p>
                       </div>
                     </div>
                   )}
