@@ -1,7 +1,7 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ArrowLeft, Calendar, Tag } from "lucide-react";
+import { ArrowLeft, Calendar, Tag, Clock } from "lucide-react";
 import articles from "@/data/articles.json";
 
 const BlogArticle = () => {
