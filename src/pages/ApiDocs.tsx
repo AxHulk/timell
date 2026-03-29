@@ -584,6 +584,13 @@ const ApiDocs = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [codeLang, setCodeLang] = useState<Lang>("cURL");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const contentRef = useRef<HTMLElement>(null);
+
+  const handleSectionChange = useCallback((id: SectionId) => {
+    setActiveSection(id);
+    setSidebarOpen(false);
+    contentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
 
   const currentIdx = sections.findIndex((s) => s.id === activeSection);
   const prevSection = currentIdx > 0 ? sections[currentIdx - 1] : null;
@@ -616,14 +623,15 @@ const ApiDocs = () => {
         <div className="container py-16 md:py-20">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">
+              <div className="text-sm text-primary font-medium mb-2">API Documentation</div>
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight mb-4">
                 API <span className="text-primary">Timell</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-8 max-w-lg">
                 Интегрируйте платформу Timell в вашу систему и автоматизируйте работу с внештатным персоналом
               </p>
               <div className="flex flex-wrap gap-3">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => setActiveSection("intro")}>
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => handleSectionChange("intro")}>
                   Начать интеграцию
                 </Button>
                 <Button size="lg" variant="outline" asChild>
@@ -684,7 +692,7 @@ const ApiDocs = () => {
             {filteredSections.map((s) => (
               <button
                 key={s.id}
-                onClick={() => { setActiveSection(s.id); setSidebarOpen(false); }}
+                onClick={() => handleSectionChange(s.id)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${activeSection === s.id ? "bg-primary/10 text-primary" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
               >
                 <img src={s.icon} alt="" className="h-5 w-5 object-contain" />
