@@ -3,8 +3,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Shield, Check, Clock, FileText, AlertTriangle, TrendingDown, UserX, Ban, ChevronDown } from "lucide-react";
+import { Shield, Check, Clock, FileText, AlertTriangle, TrendingDown, UserX, Ban, ChevronDown, Building2, User, MapPin, Loader2 } from "lucide-react";
 import heroImg from "@/assets/status-check/hero.png";
+import { supabase } from "@/integrations/supabase/client";
 
 const scenarios = [
   { icon: TrendingDown, title: "Превышение годового дохода", desc: "Если доход самозанятого превышает 2,4 млн рублей в год, он автоматически теряет статус плательщика НПД и должен перейти на другой налоговый режим." },
@@ -66,13 +67,40 @@ const StatusCheck = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [inn, setInn] = useState("");
   const [checkDate, setCheckDate] = useState(new Date().toISOString().split("T")[0]);
-  const [result, setResult] = useState<null | "active" | "inactive" | "unknown">(null);
+  const [loading, setLoading] = useState(false);
+  const [npdStatus, setNpdStatus] = useState<{ status: boolean; message: string } | null>(null);
+  const [company, setCompany] = useState<{
+    name?: string; kpp?: string; director?: string; address?: string;
+    ogrn?: string; registrationDate?: string; activity?: string; status?: string;
+  } | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleCheck = (e: React.FormEvent) => {
+  const handleCheck = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (inn.length === 12) setResult("active");
-    else if (inn.length > 0) setResult("unknown");
-    else setResult(null);
+    if (!inn || !/^\d{10,12}$/.test(inn)) {
+      setError("ИНН должен содержать 10 или 12 цифр");
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    setNpdStatus(null);
+    setCompany(null);
+
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke('check-inn', {
+        body: { inn, requestDate: checkDate },
+      });
+
+      if (fnError) throw new Error(fnError.message);
+      if (!data?.success) throw new Error(data?.error || 'Ошибка проверки');
+
+      if (data.npdStatus) setNpdStatus(data.npdStatus);
+      if (data.company) setCompany(data.company);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Произошла ошибка');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -94,24 +122,62 @@ const StatusCheck = () => {
             <form onSubmit={handleCheck} className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-4">
               <div>
                 <label className="text-sm font-medium text-foreground mb-1.5 block">ИНН самозанятого</label>
-                <Input placeholder="Введите ИНН самозанятого" value={inn} onChange={(e) => { setInn(e.target.value); setResult(null); }} />
+                <Input placeholder="Введите ИНН (10 или 12 цифр)" value={inn} onChange={(e) => { setInn(e.target.value.replace(/\D/g, '')); setError(null); setNpdStatus(null); setCompany(null); }} maxLength={12} />
               </div>
               <div>
                 <label className="text-sm font-medium text-foreground mb-1.5 block">На дату</label>
                 <Input type="date" value={checkDate} onChange={(e) => setCheckDate(e.target.value)} />
               </div>
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                Узнать статус
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" disabled={loading}>
+                {loading ? <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Проверяем...</> : "Узнать статус"}
               </Button>
-              {result && (
+
+              {error && (
+                <div className="rounded-xl p-4 text-sm font-medium bg-destructive/10 text-destructive border border-destructive/20">
+                  ⚠️ {error}
+                </div>
+              )}
+
+              {npdStatus && (
                 <div className={`rounded-xl p-4 text-sm font-medium ${
-                  result === "active" ? "bg-green-50 text-green-700 border border-green-200" :
-                  result === "inactive" ? "bg-red-50 text-red-700 border border-red-200" :
-                  "bg-yellow-50 text-yellow-700 border border-yellow-200"
+                  npdStatus.status ? "bg-green-50 text-green-700 border border-green-200" : "bg-destructive/10 text-destructive border border-destructive/20"
                 }`}>
-                  {result === "active" && "✅ Статус активен — самозанятый зарегистрирован как плательщик НПД"}
-                  {result === "inactive" && "❌ Статус неактивен — самозанятый не зарегистрирован"}
-                  {result === "unknown" && "⚠️ Статус неизвестен — проверьте правильность ИНН"}
+                  {npdStatus.status
+                    ? "✅ Статус активен — самозанятый зарегистрирован как плательщик НПД"
+                    : `❌ Статус неактивен — ${npdStatus.message || 'самозанятый не зарегистрирован как плательщик НПД'}`
+                  }
+                </div>
+              )}
+
+              {company && (
+                <div className="rounded-xl border border-border bg-muted/50 p-5 space-y-3">
+                  <h4 className="font-bold text-foreground flex items-center gap-2">
+                    <Building2 className="h-4 w-4 text-primary" /> Информация из реестра
+                  </h4>
+                  {company.name && (
+                    <div className="text-sm"><span className="text-muted-foreground">Наименование:</span> <span className="font-medium text-foreground">{company.name}</span></div>
+                  )}
+                  {company.director && (
+                    <div className="text-sm flex items-start gap-1.5"><User className="h-3.5 w-3.5 text-muted-foreground mt-0.5 flex-shrink-0" /><span className="text-muted-foreground">Руководитель:</span> <span className="font-medium text-foreground">{company.director}</span></div>
+                  )}
+                  {company.kpp && (
+                    <div className="text-sm"><span className="text-muted-foreground">КПП:</span> <span className="font-medium text-foreground">{company.kpp}</span></div>
+                  )}
+                  {company.ogrn && (
+                    <div className="text-sm"><span className="text-muted-foreground">ОГРН:</span> <span className="font-medium text-foreground">{company.ogrn}</span></div>
+                  )}
+                  {company.registrationDate && (
+                    <div className="text-sm"><span className="text-muted-foreground">Дата регистрации:</span> <span className="font-medium text-foreground">{company.registrationDate}</span></div>
+                  )}
+                  {company.address && (
+                    <div className="text-sm flex items-start gap-1.5"><MapPin className="h-3.5 w-3.5 text-muted-foreground mt-0.5 flex-shrink-0" /><span className="text-muted-foreground">Адрес:</span> <span className="font-medium text-foreground">{company.address}</span></div>
+                  )}
+                  {company.activity && (
+                    <div className="text-sm"><span className="text-muted-foreground">Деятельность:</span> <span className="font-medium text-foreground">{company.activity}</span></div>
+                  )}
+                  {company.status && (
+                    <div className="text-sm"><span className="text-muted-foreground">Статус:</span> <span className="font-medium text-foreground">{company.status}</span></div>
+                  )}
                 </div>
               )}
             </form>
