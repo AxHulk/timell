@@ -283,7 +283,7 @@ const FindTask = () => {
                           <Building2 className="h-4 w-4 text-muted-foreground" />
                           <span className="text-sm text-muted-foreground">{task.company}</span>
                           {task.verified && (
-                            <Badge className="text-[10px] px-1.5 py-0 bg-green-100 text-green-700 border-0 hover:bg-green-100">
+                            <Badge className="text-[10px] px-1.5 py-0 bg-accent text-accent-foreground border-0 hover:bg-accent">
                               ✓ Проверенный
                             </Badge>
                           )}
