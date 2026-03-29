@@ -10,6 +10,7 @@ const menuLinks: Record<string, string> = {
   "Автоматизация оформления внештатников": "/solutions/freelancer-onboarding",
   "Оплата налогов самозанятых": "/solutions/tax-payment",
   "Проверка статуса самозанятого": "/solutions/status-check",
+  "Партнёрская программа": "/solutions/partner-program",
 };
 
 const navItems = [

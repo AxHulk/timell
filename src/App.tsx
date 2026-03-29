@@ -9,6 +9,7 @@ import Integration1C from "./pages/Integration1C.tsx";
 import FreelancerOnboarding from "./pages/FreelancerOnboarding.tsx";
 import TaxPayment from "./pages/TaxPayment.tsx";
 import StatusCheck from "./pages/StatusCheck.tsx";
+import PartnerProgram from "./pages/PartnerProgram.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/solutions/freelancer-onboarding" element={<FreelancerOnboarding />} />
           <Route path="/solutions/tax-payment" element={<TaxPayment />} />
           <Route path="/solutions/status-check" element={<StatusCheck />} />
+          <Route path="/solutions/partner-program" element={<PartnerProgram />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
