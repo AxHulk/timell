@@ -120,7 +120,7 @@ const StatusCheck = () => {
             <form onSubmit={handleCheck} className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-4">
               <div>
                 <label className="text-sm font-medium text-foreground mb-1.5 block">ИНН самозанятого</label>
-                <Input placeholder="Введите ИНН (10 или 12 цифр)" value={inn} onChange={(e) => { setInn(e.target.value.replace(/\D/g, '')); setError(null); setNpdStatus(null); setCompany(null); }} maxLength={12} />
+                <Input placeholder="Введите ИНН (10 или 12 цифр)" value={inn} onChange={(e) => { setInn(e.target.value.replace(/\D/g, '')); setError(null); setNpdStatus(null); setCorsFallback(false); }} maxLength={12} />
               </div>
               <div>
                 <label className="text-sm font-medium text-foreground mb-1.5 block">На дату</label>
