@@ -210,12 +210,12 @@ const StatusCheck = () => {
                       </div>
                     </div>
                   )}
-                  {c.activity && (
+                  {c.okved && (
                     <div className="flex items-start gap-3">
                       <Briefcase className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="text-xs text-muted-foreground">Основной вид деятельности</p>
-                        <p className="text-sm text-foreground">{c.activity}</p>
+                        <p className="text-xs text-muted-foreground">Основной ОКВЭД</p>
+                        <p className="text-sm text-foreground">{c.okved}</p>
                       </div>
                     </div>
                   )}
