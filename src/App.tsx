@@ -18,6 +18,7 @@ import MarketerPayments from "./pages/MarketerPayments.tsx";
 import BloggerPayments from "./pages/BloggerPayments.tsx";
 import CourierPayments from "./pages/CourierPayments.tsx";
 import CleaningPayments from "./pages/CleaningPayments.tsx";
+import TourismPayments from "./pages/TourismPayments.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
