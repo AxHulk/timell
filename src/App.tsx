@@ -13,6 +13,7 @@ import PartnerProgram from "./pages/PartnerProgram.tsx";
 import AccountantAutomation from "./pages/AccountantAutomation.tsx";
 import HRPlatform from "./pages/HRPlatform.tsx";
 import OutsourcingPayments from "./pages/OutsourcingPayments.tsx";
+import FreelancerPayments from "./pages/FreelancerPayments.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/services/accountant" element={<AccountantAutomation />} />
           <Route path="/services/hr-platform" element={<HRPlatform />} />
           <Route path="/services/outsourcing" element={<OutsourcingPayments />} />
+          <Route path="/services/copywriters" element={<FreelancerPayments />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
