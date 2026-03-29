@@ -68,11 +68,8 @@ const StatusCheck = () => {
   const [checkDate, setCheckDate] = useState(new Date().toISOString().split("T")[0]);
   const [loading, setLoading] = useState(false);
   const [npdStatus, setNpdStatus] = useState<{ status: boolean; message: string } | null>(null);
-  const [company, setCompany] = useState<{
-    name?: string; kpp?: string; director?: string; address?: string;
-    ogrn?: string; registrationDate?: string; activity?: string; status?: string;
-  } | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [corsFallback, setCorsFallback] = useState(false);
 
   const handleCheck = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,20 +80,22 @@ const StatusCheck = () => {
     setLoading(true);
     setError(null);
     setNpdStatus(null);
-    setCompany(null);
+    setCorsFallback(false);
 
     try {
-      const { data, error: fnError } = await supabase.functions.invoke('check-inn', {
-        body: { inn, requestDate: checkDate },
+      const response = await fetch('https://statusnpd.nalog.ru/api/v1/tracker/taxpayer_status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ inn, requestDate: checkDate }),
       });
 
-      if (fnError) throw new Error(fnError.message);
-      if (!data?.success) throw new Error(data?.error || 'Ошибка проверки');
+      if (!response.ok) throw new Error('Ошибка запроса к ФНС');
 
-      if (data.npdStatus) setNpdStatus(data.npdStatus);
-      if (data.company) setCompany(data.company);
+      const data = await response.json();
+      setNpdStatus({ status: data.status, message: data.message || '' });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Произошла ошибка');
+      // CORS or network error — show fallback
+      setCorsFallback(true);
     } finally {
       setLoading(false);
     }
