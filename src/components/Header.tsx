@@ -11,6 +11,7 @@ const menuLinks: Record<string, string> = {
   "Оплата налогов самозанятых": "/solutions/tax-payment",
   "Проверка статуса самозанятого": "/solutions/status-check",
   "Партнёрская программа": "/solutions/partner-program",
+  "Для бухгалтеров": "/services/accountant",
 };
 
 const navItems = [
