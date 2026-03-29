@@ -169,7 +169,7 @@ const Integration1C = () => {
               <div key={v.name} className="rounded-2xl border border-border bg-card p-4 text-center hover:shadow-lg hover:border-primary/30 transition-all">
                 <img src={v.img} alt={v.name} className="w-16 h-20 object-contain mx-auto mb-3" />
                 <p className="text-xs font-medium text-foreground leading-tight">{v.name}</p>
-                <span className="inline-flex items-center gap-1 mt-2 text-xs text-green-600">
+                <span className="inline-flex items-center gap-1 mt-2 text-xs text-primary">
                   <Check className="h-3 w-3" /> Поддержка
                 </span>
               </div>
