@@ -158,7 +158,7 @@ const StatusCheck = () => {
                     <div className="flex items-start gap-3">
                       <User className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="text-xs text-muted-foreground">Руководитель</p>
+                        <p className="text-xs text-muted-foreground">{c.directorPost || 'Руководитель'}</p>
                         <p className="font-medium text-foreground">{c.director}</p>
                       </div>
                     </div>
