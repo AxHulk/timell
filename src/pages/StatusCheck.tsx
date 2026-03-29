@@ -147,35 +147,19 @@ const StatusCheck = () => {
                 </div>
               )}
 
-              {company && (
-                <div className="rounded-xl border border-border bg-muted/50 p-5 space-y-3">
-                  <h4 className="font-bold text-foreground flex items-center gap-2">
-                    <Building2 className="h-4 w-4 text-primary" /> Информация из реестра
-                  </h4>
-                  {company.name && (
-                    <div className="text-sm"><span className="text-muted-foreground">Наименование:</span> <span className="font-medium text-foreground">{company.name}</span></div>
-                  )}
-                  {company.director && (
-                    <div className="text-sm flex items-start gap-1.5"><User className="h-3.5 w-3.5 text-muted-foreground mt-0.5 flex-shrink-0" /><span className="text-muted-foreground">Руководитель:</span> <span className="font-medium text-foreground">{company.director}</span></div>
-                  )}
-                  {company.kpp && (
-                    <div className="text-sm"><span className="text-muted-foreground">КПП:</span> <span className="font-medium text-foreground">{company.kpp}</span></div>
-                  )}
-                  {company.ogrn && (
-                    <div className="text-sm"><span className="text-muted-foreground">ОГРН:</span> <span className="font-medium text-foreground">{company.ogrn}</span></div>
-                  )}
-                  {company.registrationDate && (
-                    <div className="text-sm"><span className="text-muted-foreground">Дата регистрации:</span> <span className="font-medium text-foreground">{company.registrationDate}</span></div>
-                  )}
-                  {company.address && (
-                    <div className="text-sm flex items-start gap-1.5"><MapPin className="h-3.5 w-3.5 text-muted-foreground mt-0.5 flex-shrink-0" /><span className="text-muted-foreground">Адрес:</span> <span className="font-medium text-foreground">{company.address}</span></div>
-                  )}
-                  {company.activity && (
-                    <div className="text-sm"><span className="text-muted-foreground">Деятельность:</span> <span className="font-medium text-foreground">{company.activity}</span></div>
-                  )}
-                  {company.status && (
-                    <div className="text-sm"><span className="text-muted-foreground">Статус:</span> <span className="font-medium text-foreground">{company.status}</span></div>
-                  )}
+              {corsFallback && (
+                <div className="rounded-xl p-4 text-sm bg-accent border border-border space-y-2">
+                  <p className="font-medium text-foreground">Прямая проверка из браузера недоступна. Воспользуйтесь официальным сервисом ФНС:</p>
+                  <a
+                    href={`https://npd.nalog.ru/check-status/`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    Проверить на сайте ФНС
+                  </a>
+                  <p className="text-xs text-muted-foreground">Скопируйте ИНН: <span className="font-mono font-medium text-foreground">{inn}</span></p>
                 </div>
               )}
             </form>
