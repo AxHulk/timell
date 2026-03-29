@@ -22,6 +22,7 @@ const menuLinks: Record<string, string> = {
   "Для турагенств": "/services/tourism",
   "Для строительных компаний": "/services/construction",
   "Калькулятор ФОТ": "/calculator",
+  "Блог": "/blog",
 };
 
 const navItems = [
