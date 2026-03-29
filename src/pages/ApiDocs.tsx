@@ -698,7 +698,7 @@ const ApiDocs = () => {
         {sidebarOpen && <div className="fixed inset-0 bg-black/30 z-20 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
         {/* Content */}
-        <main className="flex-1 py-8 lg:py-10 lg:pl-8 min-w-0">
+        <main ref={contentRef} className="flex-1 py-8 lg:py-10 lg:pl-8 min-w-0">
           {/* Section illustration */}
           {currentSection.illustration && (
             <div className="mb-8 rounded-2xl overflow-hidden bg-muted/30 border border-border">
