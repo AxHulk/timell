@@ -1,7 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import logoImg from "@/assets/logo-horizontal.png";
+
+const menuLinks: Record<string, string> = {
+  "Автоматизация документооборота с самозанятыми": "/solutions/doc-automation",
+};
 
 const navItems = [
   {
@@ -80,15 +85,18 @@ const Header = () => {
               {item.children && openDropdown === item.label && (
                 <div className="absolute top-full left-0 pt-1 z-50">
                   <div className="bg-popover border border-border rounded-lg shadow-lg p-2 min-w-[260px]">
-                    {item.children.map((child) => (
-                      <a
-                        key={child}
-                        href="#"
-                        className="block px-3 py-2 text-sm text-foreground/80 hover:text-foreground hover:bg-accent rounded-md transition-colors"
-                      >
-                        {child}
-                      </a>
-                    ))}
+                    {item.children.map((child) => {
+                      const href = menuLinks[child];
+                      return href ? (
+                        <Link key={child} to={href} className="block px-3 py-2 text-sm text-foreground/80 hover:text-foreground hover:bg-accent rounded-md transition-colors">
+                          {child}
+                        </Link>
+                      ) : (
+                        <a key={child} href="#" className="block px-3 py-2 text-sm text-foreground/80 hover:text-foreground hover:bg-accent rounded-md transition-colors">
+                          {child}
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -121,9 +129,14 @@ const Header = () => {
               </button>
               {item.children && openDropdown === item.label && (
                 <div className="pl-4 space-y-1">
-                  {item.children.map((child) => (
-                    <a key={child} href="#" className="block py-1.5 text-sm text-muted-foreground hover:text-foreground">{child}</a>
-                  ))}
+                  {item.children.map((child) => {
+                    const href = menuLinks[child];
+                    return href ? (
+                      <Link key={child} to={href} className="block py-1.5 text-sm text-muted-foreground hover:text-foreground">{child}</Link>
+                    ) : (
+                      <a key={child} href="#" className="block py-1.5 text-sm text-muted-foreground hover:text-foreground">{child}</a>
+                    );
+                  })}
                 </div>
               )}
             </div>
