@@ -1,7 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import logoImg from "@/assets/logo-horizontal.png";
+
+const menuLinks: Record<string, string> = {
+  "Автоматизация документооборота с самозанятыми": "/solutions/doc-automation",
+};
 
 const navItems = [
   {
