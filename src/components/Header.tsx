@@ -9,6 +9,7 @@ const menuLinks: Record<string, string> = {
   "Интеграция с 1С": "/solutions/1c-integration",
   "Автоматизация оформления внештатников": "/solutions/freelancer-onboarding",
   "Оплата налогов самозанятых": "/solutions/tax-payment",
+  "Проверка статуса самозанятого": "/solutions/status-check",
 };
 
 const navItems = [
