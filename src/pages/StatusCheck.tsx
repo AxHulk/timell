@@ -67,13 +67,40 @@ const StatusCheck = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [inn, setInn] = useState("");
   const [checkDate, setCheckDate] = useState(new Date().toISOString().split("T")[0]);
-  const [result, setResult] = useState<null | "active" | "inactive" | "unknown">(null);
+  const [loading, setLoading] = useState(false);
+  const [npdStatus, setNpdStatus] = useState<{ status: boolean; message: string } | null>(null);
+  const [company, setCompany] = useState<{
+    name?: string; kpp?: string; director?: string; address?: string;
+    ogrn?: string; registrationDate?: string; activity?: string; status?: string;
+  } | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleCheck = (e: React.FormEvent) => {
+  const handleCheck = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (inn.length === 12) setResult("active");
-    else if (inn.length > 0) setResult("unknown");
-    else setResult(null);
+    if (!inn || !/^\d{10,12}$/.test(inn)) {
+      setError("ИНН должен содержать 10 или 12 цифр");
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    setNpdStatus(null);
+    setCompany(null);
+
+    try {
+      const { data, error: fnError } = await supabase.functions.invoke('check-inn', {
+        body: { inn, requestDate: checkDate },
+      });
+
+      if (fnError) throw new Error(fnError.message);
+      if (!data?.success) throw new Error(data?.error || 'Ошибка проверки');
+
+      if (data.npdStatus) setNpdStatus(data.npdStatus);
+      if (data.company) setCompany(data.company);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Произошла ошибка');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
