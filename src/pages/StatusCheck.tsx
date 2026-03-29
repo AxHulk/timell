@@ -71,9 +71,9 @@ const StatusCheck = () => {
   const [result, setResult] = useState<{
     found: boolean;
     company?: {
-      inn?: string; kpp?: string; name?: string; director?: string;
-      address?: string; ogrn?: string; registrationDate?: string;
-      activity?: string; status?: string; capitalAmount?: string; employeeCount?: string;
+      inn?: string; kpp?: string; name?: string; director?: string; directorPost?: string;
+      address?: string; ogrn?: string; registrationDate?: string; liquidationDate?: string;
+      okved?: string; status?: string; opf?: string; type?: string; employeeCount?: string;
     };
     message?: string;
   } | null>(null);
