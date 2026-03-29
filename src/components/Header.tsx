@@ -26,6 +26,7 @@ const menuLinks: Record<string, string> = {
   "API документация": "/api-docs",
   "Платформа для внештатников": "/freelancer-platform",
   "База знаний": "/freelancer-knowledge",
+  "Найти задание": "/find-task",
 };
 
 const navItems = [
