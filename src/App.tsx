@@ -16,6 +16,7 @@ import OutsourcingPayments from "./pages/OutsourcingPayments.tsx";
 import FreelancerPayments from "./pages/FreelancerPayments.tsx";
 import MarketerPayments from "./pages/MarketerPayments.tsx";
 import BloggerPayments from "./pages/BloggerPayments.tsx";
+import CourierPayments from "./pages/CourierPayments.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/services/copywriters" element={<FreelancerPayments />} />
           <Route path="/services/marketers" element={<MarketerPayments />} />
           <Route path="/services/bloggers" element={<BloggerPayments />} />
+          <Route path="/services/couriers" element={<CourierPayments />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
