@@ -14,6 +14,7 @@ const menuLinks: Record<string, string> = {
   "Для бухгалтеров": "/services/accountant",
   "HR-платформа": "/services/hr-platform",
   "Для аутсорсинга и аутстаффинга": "/services/outsourcing",
+  "Выплаты копирайтерам": "/services/copywriters",
 };
 
 const navItems = [
