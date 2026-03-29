@@ -15,10 +15,36 @@ const BlogArticle = () => {
   const prev = idx > 0 ? (articles as any[])[idx - 1] : null;
   const next = idx < articles.length - 1 ? (articles as any[])[idx + 1] : null;
 
-  // Split text into paragraphs
-  const paragraphs = article.text
+  // Extract reading time and clean metadata from text
+  const rawParagraphs = article.text
     .split("\n")
     .filter((p: string) => p.trim().length > 0);
+
+  // Extract reading time from metadata lines
+  const readingTimeLine = rawParagraphs.find((p: string) => /^~?\d+\s*минут/.test(p.trim()));
+  const readingTime = readingTimeLine ? readingTimeLine.trim() : null;
+
+  // Skip metadata lines at the top: title, date, reading time, view count, rating, (comments), "Содержание статьи"
+  const metadataPatterns = [
+    (p: string) => p.trim() === article.title,
+    (p: string) => /^\d{2}\.\d{2}\.\d{4}$/.test(p.trim()),
+    (p: string) => /^~?\d+\s*минут/.test(p.trim()),
+    (p: string) => /^\d[\d\s]*$/.test(p.trim()) && p.trim().length < 10,
+    (p: string) => /^\d+\.\d+$/.test(p.trim()),
+    (p: string) => /^\(\d+\)$/.test(p.trim()),
+    (p: string) => p.trim() === "Содержание статьи",
+  ];
+
+  // Remove leading metadata lines
+  let startIdx = 0;
+  for (let i = 0; i < rawParagraphs.length && i < 10; i++) {
+    if (metadataPatterns.some(fn => fn(rawParagraphs[i]))) {
+      startIdx = i + 1;
+    } else {
+      break;
+    }
+  }
+  const paragraphs = rawParagraphs.slice(startIdx);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
