@@ -164,11 +164,11 @@ const Integration1C = () => {
           <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-12">
             Поддерживаются как облачные версии (1С:Облако), так и локальные установки
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-5xl mx-auto items-stretch">
             {versions.map((v) => (
-              <div key={v.name} className="rounded-2xl border border-border bg-card p-4 text-center hover:shadow-lg hover:border-primary/30 transition-all">
-                <img src={v.img} alt={v.name} className="w-16 h-20 object-contain mx-auto mb-3" />
-                <p className="text-xs font-medium text-foreground leading-tight">{v.name}</p>
+              <div key={v.name} className="rounded-2xl border border-border bg-card p-4 flex flex-col items-center hover:shadow-lg hover:border-primary/30 transition-all">
+                <img src={v.img} alt={v.name} className="w-16 h-20 object-contain mb-3" />
+                <p className="text-xs font-medium text-foreground leading-tight text-center flex-1">{v.name}</p>
                 <span className="inline-flex items-center gap-1 mt-2 text-xs text-primary">
                   <Check className="h-3 w-3" /> Поддержка
                 </span>
