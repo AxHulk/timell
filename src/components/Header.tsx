@@ -18,6 +18,7 @@ const menuLinks: Record<string, string> = {
   "Выплаты маркетологам": "/services/marketers",
   "Выплаты блогерам": "/services/bloggers",
   "Для курьерских служб": "/services/couriers",
+  "Для клининговых компаний": "/services/cleaning",
 };
 
 const navItems = [
