@@ -16,6 +16,7 @@ const menuLinks: Record<string, string> = {
   "Для аутсорсинга и аутстаффинга": "/services/outsourcing",
   "Выплаты копирайтерам": "/services/copywriters",
   "Выплаты маркетологам": "/services/marketers",
+  "Выплаты блогерам": "/services/bloggers",
 };
 
 const navItems = [
