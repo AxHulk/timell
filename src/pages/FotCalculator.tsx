@@ -66,7 +66,7 @@ function calc(people: number, fot: number) {
   const bank_staff = fot * 0.019395;
   const bank_smz = fot * 0.012766;
   const bank_timell = 0;
-  const commission_timell = fot * 0.037234;
+  const commission_timell = fot * 0.037234 * pK;
 
   const serv_staff = salary_staff + bank_staff;
   const serv_smz = salary_smz + bank_smz;
