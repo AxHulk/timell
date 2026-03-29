@@ -167,7 +167,7 @@ const Blog = () => {
                   <Link
                     key={article.id}
                     to={`/blog/${article.slug}`}
-                    className="group block bg-card border border-border rounded-xl p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300"
+                    className="group flex flex-col bg-card border border-border rounded-xl p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 h-full"
                   >
                     <div className="flex flex-wrap gap-1.5 mb-3">
                       {article.tags.slice(0, 3).map((tag: string) => (
@@ -182,10 +182,10 @@ const Blog = () => {
                     <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2 mb-3 text-base">
                       {article.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
+                    <p className="text-sm text-muted-foreground line-clamp-3 mb-4 flex-1">
                       {article.description}
                     </p>
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-auto">
                       <Calendar className="h-3.5 w-3.5" />
                       {article.date}
                     </div>
