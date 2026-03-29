@@ -158,20 +158,16 @@ const GroupRow = ({
 
 /* ── page ── */
 const FotCalculator = () => {
-  const [peopleStr, setPeopleStr] = useState("10");
-  const [fotStr, setFotStr] = useState("1 000 000");
+  const [people, setPeople] = useState(10);
+  const [fot, setFot] = useState(1000000);
   const [executorCount, setExecutorCount] = useState("");
 
-  const people = parseInt(peopleStr.replace(/\s/g, "")) || 0;
-  const fot = parseInt(fotStr.replace(/\s/g, "")) || 0;
+  const r = calc(Math.max(people, 1), Math.max(fot, 1));
 
-  const r = useMemo(() => calc(Math.max(people, 1), Math.max(fot, 1)), [people, fot]);
+  const formatInput = (n: number) =>
+    n ? n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "";
 
-  const handleFotChange = (v: string) => {
-    const digits = v.replace(/[^\d]/g, "");
-    if (!digits) { setFotStr(""); return; }
-    setFotStr(parseInt(digits).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "));
-  };
+  const parseInput = (v: string) => parseInt(v.replace(/\D/g, "")) || 0;
 
   const savingSmz = r.total.smz - r.total.staff;
   const savingTimell = r.total.timell - r.total.staff;
