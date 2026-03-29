@@ -21,6 +21,7 @@ const menuLinks: Record<string, string> = {
   "Для клининга": "/services/cleaning",
   "Для турагенств": "/services/tourism",
   "Для строительных компаний": "/services/construction",
+  "Калькулятор ФОТ": "/calculator",
 };
 
 const navItems = [
@@ -50,7 +51,7 @@ const navItems = [
       "Для турагенств",
     ],
   },
-  { label: "Калькулятор ФОТ", children: null },
+  { label: "Калькулятор ФОТ", href: "/calculator", children: null },
   {
     label: "База знаний",
     children: ["Блог", "API документация"],
