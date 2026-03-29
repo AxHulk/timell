@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import DocAutomation from "./pages/DocAutomation.tsx";
 import Integration1C from "./pages/Integration1C.tsx";
 import FreelancerOnboarding from "./pages/FreelancerOnboarding.tsx";
+import TaxPayment from "./pages/TaxPayment.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/solutions/doc-automation" element={<DocAutomation />} />
           <Route path="/solutions/1c-integration" element={<Integration1C />} />
           <Route path="/solutions/freelancer-onboarding" element={<FreelancerOnboarding />} />
+          <Route path="/solutions/tax-payment" element={<TaxPayment />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
