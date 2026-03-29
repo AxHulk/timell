@@ -48,21 +48,21 @@ function calc(people: number, fot: number) {
   const pay_smz = zp_all + tax_smz;
 
   // Документооборот (per person)
-  const print_staff = 25 * pK;
-  const print_smz = 125 * pK;
-  const send_staff = 83.3 * pK;
-  const send_smz = 1625 * pK;
-  const archive_staff = 8.3 * pK;
-  const archive_smz = 33.3 * pK;
+  const print_staff = 250 * pK;
+  const print_smz = 1250 * pK;
+  const send_staff = 833 * pK;
+  const send_smz = 16250 * pK;
+  const archive_staff = 83 * pK;
+  const archive_smz = 333 * pK;
 
   const doc_staff = print_staff + send_staff + archive_staff;
   const doc_smz = print_smz + send_smz + archive_smz;
   const doc_timell = 0;
 
   // Обслуживание
-  const salary_staff = 854.3 * pK;
-  const salary_smz = 1708.6 * pK;
-  const salary_timell = 256.3 * pK;
+  const salary_staff = 8543 * pK;
+  const salary_smz = 17086 * pK;
+  const salary_timell = 2563 * pK;
   const bank_staff = fot * 0.019395;
   const bank_smz = fot * 0.012766;
   const bank_timell = 0;
