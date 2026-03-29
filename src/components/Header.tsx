@@ -20,6 +20,7 @@ const menuLinks: Record<string, string> = {
   "Для курьерских служб": "/services/couriers",
   "Для клининговых компаний": "/services/cleaning",
   "Для туристических компаний": "/services/tourism",
+  "Для строительных компаний": "/services/construction",
 };
 
 const navItems = [
