@@ -66,11 +66,17 @@ const faq = [
 const StatusCheck = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [inn, setInn] = useState("");
-  const [checkDate, setCheckDate] = useState(new Date().toISOString().split("T")[0]);
   const [loading, setLoading] = useState(false);
-  const [npdStatus, setNpdStatus] = useState<{ status: boolean; message: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [corsFallback, setCorsFallback] = useState(false);
+  const [result, setResult] = useState<{
+    found: boolean;
+    company?: {
+      inn?: string; kpp?: string; name?: string; director?: string;
+      address?: string; ogrn?: string; registrationDate?: string;
+      activity?: string; status?: string; capitalAmount?: string; employeeCount?: string;
+    };
+    message?: string;
+  } | null>(null);
 
   const handleCheck = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,27 +86,25 @@ const StatusCheck = () => {
     }
     setLoading(true);
     setError(null);
-    setNpdStatus(null);
-    setCorsFallback(false);
+    setResult(null);
 
     try {
-      const response = await fetch('https://statusnpd.nalog.ru/api/v1/tracker/taxpayer_status', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ inn, requestDate: checkDate }),
+      const { data, error: fnError } = await supabase.functions.invoke('check-inn', {
+        body: { inn },
       });
 
-      if (!response.ok) throw new Error('Ошибка запроса к ФНС');
+      if (fnError) throw new Error(fnError.message);
+      if (!data?.success) throw new Error(data?.error || 'Ошибка проверки');
 
-      const data = await response.json();
-      setNpdStatus({ status: data.status, message: data.message || '' });
+      setResult({ found: data.found, company: data.company, message: data.message });
     } catch (err) {
-      // CORS or network error — show fallback
-      setCorsFallback(true);
+      setError(err instanceof Error ? err.message : 'Произошла ошибка при проверке');
     } finally {
       setLoading(false);
     }
   };
+
+  const c = result?.company;
 
   return (
     <div className="min-h-screen">
@@ -114,21 +118,17 @@ const StatusCheck = () => {
               Проверить статус самозанятого
             </h1>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Узнайте, активен ли статус плательщика НПД перед выплатой
+              Узнайте информацию о компании или ИП по ИНН
             </p>
 
-            {/* Block 2: Check Form */}
+            {/* Check Form */}
             <form onSubmit={handleCheck} className="rounded-2xl border border-border bg-card p-6 shadow-sm space-y-4">
               <div>
-                <label className="text-sm font-medium text-foreground mb-1.5 block">ИНН самозанятого</label>
-                <Input placeholder="Введите ИНН (10 или 12 цифр)" value={inn} onChange={(e) => { setInn(e.target.value.replace(/\D/g, '')); setError(null); setNpdStatus(null); setCorsFallback(false); }} maxLength={12} />
+                <label className="text-sm font-medium text-foreground mb-1.5 block">ИНН</label>
+                <Input placeholder="Введите ИНН (10 или 12 цифр)" value={inn} onChange={(e) => { setInn(e.target.value.replace(/\D/g, '')); setError(null); setResult(null); }} maxLength={12} />
               </div>
-              <div>
-                <label className="text-sm font-medium text-foreground mb-1.5 block">На дату</label>
-                <Input type="date" value={checkDate} onChange={(e) => setCheckDate(e.target.value)} />
-              </div>
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" disabled={loading}>
-                {loading ? <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Проверяем...</> : "Узнать статус"}
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Проверяем...</> : "Проверить по ИНН"}
               </Button>
 
               {error && (
@@ -137,30 +137,98 @@ const StatusCheck = () => {
                 </div>
               )}
 
-              {npdStatus && (
-                <div className={`rounded-xl p-4 text-sm font-medium ${
-                  npdStatus.status ? "bg-green-50 text-green-700 border border-green-200" : "bg-destructive/10 text-destructive border border-destructive/20"
-                }`}>
-                  {npdStatus.status
-                    ? "✅ Статус активен — самозанятый зарегистрирован как плательщик НПД"
-                    : `❌ Статус неактивен — ${npdStatus.message || 'самозанятый не зарегистрирован как плательщик НПД'}`
-                  }
+              {result && !result.found && (
+                <div className="rounded-xl p-4 text-sm font-medium bg-muted text-muted-foreground border border-border">
+                  {result.message || 'Данные по указанному ИНН не найдены'}
                 </div>
               )}
 
-              {corsFallback && (
-                <div className="rounded-xl p-4 text-sm bg-accent border border-border space-y-2">
-                  <p className="font-medium text-foreground">Прямая проверка из браузера недоступна. Воспользуйтесь официальным сервисом ФНС:</p>
-                  <a
-                    href={`https://npd.nalog.ru/check-status/`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    Проверить на сайте ФНС
-                  </a>
-                  <p className="text-xs text-muted-foreground">Скопируйте ИНН: <span className="font-mono font-medium text-foreground">{inn}</span></p>
+              {result?.found && c && (
+                <div className="rounded-xl border border-border bg-muted/30 p-5 space-y-4">
+                  {c.name && (
+                    <div className="flex items-start gap-3">
+                      <Building2 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">Наименование</p>
+                        <p className="font-semibold text-foreground">{c.name}</p>
+                      </div>
+                    </div>
+                  )}
+                  {c.director && (
+                    <div className="flex items-start gap-3">
+                      <User className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">Руководитель</p>
+                        <p className="font-medium text-foreground">{c.director}</p>
+                      </div>
+                    </div>
+                  )}
+                  <div className="grid grid-cols-2 gap-3">
+                    {c.inn && (
+                      <div className="flex items-start gap-2">
+                        <Hash className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-xs text-muted-foreground">ИНН</p>
+                          <p className="font-mono text-sm font-medium text-foreground">{c.inn}</p>
+                        </div>
+                      </div>
+                    )}
+                    {c.kpp && (
+                      <div className="flex items-start gap-2">
+                        <Hash className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-xs text-muted-foreground">КПП</p>
+                          <p className="font-mono text-sm font-medium text-foreground">{c.kpp}</p>
+                        </div>
+                      </div>
+                    )}
+                    {c.ogrn && (
+                      <div className="flex items-start gap-2">
+                        <Hash className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-xs text-muted-foreground">ОГРН</p>
+                          <p className="font-mono text-sm font-medium text-foreground">{c.ogrn}</p>
+                        </div>
+                      </div>
+                    )}
+                    {c.registrationDate && (
+                      <div className="flex items-start gap-2">
+                        <Calendar className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-xs text-muted-foreground">Дата регистрации</p>
+                          <p className="text-sm font-medium text-foreground">{c.registrationDate}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  {c.address && (
+                    <div className="flex items-start gap-3">
+                      <MapPin className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">Адрес</p>
+                        <p className="text-sm text-foreground">{c.address}</p>
+                      </div>
+                    </div>
+                  )}
+                  {c.activity && (
+                    <div className="flex items-start gap-3">
+                      <Briefcase className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-xs text-muted-foreground">Основной вид деятельности</p>
+                        <p className="text-sm text-foreground">{c.activity}</p>
+                      </div>
+                    </div>
+                  )}
+                  {c.status && (
+                    <div className="pt-2 border-t border-border">
+                      <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${
+                        c.status.toLowerCase().includes('действ') ? 'bg-green-100 text-green-700' : 'bg-destructive/10 text-destructive'
+                      }`}>
+                        {c.status.toLowerCase().includes('действ') ? <Check className="h-3 w-3" /> : <AlertTriangle className="h-3 w-3" />}
+                        {c.status}
+                      </span>
+                    </div>
+                  )}
                 </div>
               )}
             </form>
