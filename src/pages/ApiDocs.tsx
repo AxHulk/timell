@@ -719,7 +719,7 @@ const ApiDocs = () => {
           {/* Navigation between sections */}
           <div className="flex items-center justify-between mt-12 pt-8 border-t border-border">
             {prevSection ? (
-              <button onClick={() => setActiveSection(prevSection.id)} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+              <button onClick={() => handleSectionChange(prevSection.id)} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
                 <ChevronLeft className="h-4 w-4" />
                 {prevSection.label}
               </button>
