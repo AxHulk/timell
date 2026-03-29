@@ -24,6 +24,7 @@ const menuLinks: Record<string, string> = {
   "Калькулятор ФОТ": "/calculator",
   "Блог": "/blog",
   "API документация": "/api-docs",
+  "Платформа для внештатников": "/freelancer-platform",
 };
 
 const navItems = [

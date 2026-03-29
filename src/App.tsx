@@ -24,6 +24,7 @@ import FotCalculator from "./pages/FotCalculator.tsx";
 import Blog from "./pages/Blog.tsx";
 import BlogArticle from "./pages/BlogArticle.tsx";
 import ApiDocs from "./pages/ApiDocs.tsx";
+import FreelancerPlatform from "./pages/FreelancerPlatform.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -56,6 +57,7 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogArticle />} />
           <Route path="/api-docs" element={<ApiDocs />} />
+          <Route path="/freelancer-platform" element={<FreelancerPlatform />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
