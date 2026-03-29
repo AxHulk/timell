@@ -1,12 +1,9 @@
 import { Button } from "@/components/ui/button";
-import planetImg from "@/assets/planet_orbit.webp";
-import moonImg from "@/assets/moon_orbits.webp";
+import heroImg from "@/assets/hero-main.png";
 
 const HeroSection = () => (
   <section className="relative overflow-hidden py-20 lg:py-28">
-    {/* Decorative bg */}
     <div className="absolute inset-0 bg-accent/30" />
-    <img src={moonImg} alt="" className="absolute top-10 right-0 w-[500px] opacity-20 pointer-events-none select-none" />
 
     <div className="container relative grid lg:grid-cols-2 gap-12 items-center">
       <div className="space-y-6">
@@ -26,7 +23,7 @@ const HeroSection = () => (
       </div>
 
       <div className="hidden lg:flex justify-center">
-        <img src={planetImg} alt="Timell платформа" className="w-full max-w-md" />
+        <img src={heroImg} alt="Timell платформа" className="w-full max-w-lg" />
       </div>
     </div>
   </section>
