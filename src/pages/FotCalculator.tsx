@@ -251,20 +251,18 @@ const FotCalculator = () => {
             <div>
               <label className="text-sm text-muted-foreground mb-1.5 block">Количество человек</label>
               <Input
-                value={peopleStr}
-                onChange={(e) => setPeopleStr(e.target.value.replace(/[^\d]/g, ""))}
+                value={formatInput(people)}
+                onChange={(e) => setPeople(parseInput(e.target.value))}
                 className="text-lg h-12"
               />
             </div>
             <div>
               <label className="text-sm text-muted-foreground mb-1.5 block">ФОТ*</label>
-              <div className="relative">
-                <Input
-                  value={fotStr}
-                  onChange={(e) => handleFotChange(e.target.value)}
-                  className="text-lg h-12"
-                />
-              </div>
+              <Input
+                value={formatInput(fot)}
+                onChange={(e) => setFot(parseInput(e.target.value))}
+                className="text-lg h-12"
+              />
             </div>
           </div>
 
