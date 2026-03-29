@@ -18,8 +18,8 @@ const menuLinks: Record<string, string> = {
   "Выплаты маркетологам": "/services/marketers",
   "Выплаты блогерам": "/services/bloggers",
   "Для курьерских служб": "/services/couriers",
-  "Для клининговых компаний": "/services/cleaning",
-  "Для туристических компаний": "/services/tourism",
+  "Для клининга": "/services/cleaning",
+  "Для турагенств": "/services/tourism",
   "Для строительных компаний": "/services/construction",
 };
 
