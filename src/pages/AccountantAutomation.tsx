@@ -149,7 +149,7 @@ const AccountantAutomation = () => {
                       <p className="text-sm text-muted-foreground">{t.before}</p>
                     </div>
                     <div className="flex gap-3 items-start">
-                      <span className="text-green-600 font-bold text-sm mt-0.5 shrink-0">Теперь:</span>
+                      <span className="text-primary font-bold text-sm mt-0.5 shrink-0">Теперь:</span>
                       <p className="text-sm text-foreground font-medium">{t.after}</p>
                     </div>
                   </div>
