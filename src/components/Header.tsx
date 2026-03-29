@@ -13,6 +13,7 @@ const menuLinks: Record<string, string> = {
   "Партнёрская программа": "/solutions/partner-program",
   "Для бухгалтеров": "/services/accountant",
   "HR-платформа": "/services/hr-platform",
+  "Для аутсорсинга и аутстаффинга": "/services/outsourcing",
 };
 
 const navItems = [
