@@ -1,11 +1,11 @@
-import benefit1 from "@/assets/benefits_1.webp";
-import benefit2 from "@/assets/benefits_2.webp";
-import benefit3 from "@/assets/benefits_3.webp";
+import cardCheck from "@/assets/card-check-executors.png";
+import cardPayments from "@/assets/card-payments.png";
+import cardDocuments from "@/assets/card-documents.png";
 
 const cards = [
-  { img: benefit1, title: "Проверим исполнителей", desc: "Автоматическая проверка статуса самозанятого в ФНС, верификация данных и оценка рисков" },
-  { img: benefit2, title: "Проведём платежи", desc: "Массовые выплаты самозанятым, ИП и физлицам с автоматическим расчётом налогов" },
-  { img: benefit3, title: "Соберём документы", desc: "Электронный документооборот: акты, договоры, чеки — всё в одном месте" },
+  { img: cardCheck, title: "Проверим исполнителей", desc: "Автоматическая проверка статуса самозанятого в ФНС, верификация данных и оценка рисков" },
+  { img: cardPayments, title: "Проведём платежи", desc: "Массовые выплаты самозанятым, ИП и физлицам с автоматическим расчётом налогов" },
+  { img: cardDocuments, title: "Соберём документы", desc: "Электронный документооборот: акты, договоры, чеки — всё в одном месте" },
 ];
 
 const AutomationCards = () => (
