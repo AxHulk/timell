@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -584,6 +584,13 @@ const ApiDocs = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [codeLang, setCodeLang] = useState<Lang>("cURL");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const contentRef = useRef<HTMLElement>(null);
+
+  const handleSectionChange = useCallback((id: SectionId) => {
+    setActiveSection(id);
+    setSidebarOpen(false);
+    contentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
 
   const currentIdx = sections.findIndex((s) => s.id === activeSection);
   const prevSection = currentIdx > 0 ? sections[currentIdx - 1] : null;
@@ -616,14 +623,15 @@ const ApiDocs = () => {
         <div className="container py-16 md:py-20">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold font-display text-foreground mb-4">
+              <div className="text-sm text-primary font-medium mb-2">API Documentation</div>
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight mb-4">
                 API <span className="text-primary">Timell</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-8 max-w-lg">
                 Интегрируйте платформу Timell в вашу систему и автоматизируйте работу с внештатным персоналом
               </p>
               <div className="flex flex-wrap gap-3">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => setActiveSection("intro")}>
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => handleSectionChange("intro")}>
                   Начать интеграцию
                 </Button>
                 <Button size="lg" variant="outline" asChild>
@@ -684,7 +692,7 @@ const ApiDocs = () => {
             {filteredSections.map((s) => (
               <button
                 key={s.id}
-                onClick={() => { setActiveSection(s.id); setSidebarOpen(false); }}
+                onClick={() => handleSectionChange(s.id)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${activeSection === s.id ? "bg-primary/10 text-primary" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}
               >
                 <img src={s.icon} alt="" className="h-5 w-5 object-contain" />
@@ -698,7 +706,7 @@ const ApiDocs = () => {
         {sidebarOpen && <div className="fixed inset-0 bg-black/30 z-20 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
         {/* Content */}
-        <main className="flex-1 py-8 lg:py-10 lg:pl-8 min-w-0">
+        <main ref={contentRef} className="flex-1 py-8 lg:py-10 lg:pl-8 min-w-0">
           {/* Section illustration */}
           {currentSection.illustration && (
             <div className="mb-8 rounded-2xl overflow-hidden bg-muted/30 border border-border">
@@ -711,13 +719,13 @@ const ApiDocs = () => {
           {/* Navigation between sections */}
           <div className="flex items-center justify-between mt-12 pt-8 border-t border-border">
             {prevSection ? (
-              <button onClick={() => setActiveSection(prevSection.id)} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+              <button onClick={() => handleSectionChange(prevSection.id)} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
                 <ChevronLeft className="h-4 w-4" />
                 {prevSection.label}
               </button>
             ) : <div />}
             {nextSection && (
-              <button onClick={() => setActiveSection(nextSection.id)} className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors font-medium">
+              <button onClick={() => handleSectionChange(nextSection.id)} className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors font-medium">
                 {nextSection.label}
                 <ChevronRight className="h-4 w-4" />
               </button>
