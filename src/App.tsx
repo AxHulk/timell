@@ -23,6 +23,7 @@ import ConstructionPayments from "./pages/ConstructionPayments.tsx";
 import FotCalculator from "./pages/FotCalculator.tsx";
 import Blog from "./pages/Blog.tsx";
 import BlogArticle from "./pages/BlogArticle.tsx";
+import ApiDocs from "./pages/ApiDocs.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -54,6 +55,7 @@ const App = () => (
           <Route path="/calculator" element={<FotCalculator />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogArticle />} />
+          <Route path="/api-docs" element={<ApiDocs />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
