@@ -7,6 +7,7 @@ import logoImg from "@/assets/logo-horizontal.png";
 const menuLinks: Record<string, string> = {
   "Автоматизация документооборота с самозанятыми": "/solutions/doc-automation",
   "Интеграция с 1С": "/solutions/1c-integration",
+  "Автоматизация оформления внештатников": "/solutions/freelancer-onboarding",
 };
 
 const navItems = [
