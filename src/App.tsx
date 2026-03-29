@@ -26,6 +26,7 @@ import BlogArticle from "./pages/BlogArticle.tsx";
 import ApiDocs from "./pages/ApiDocs.tsx";
 import FreelancerPlatform from "./pages/FreelancerPlatform.tsx";
 import FreelancerKnowledge from "./pages/FreelancerKnowledge.tsx";
+import FindTask from "./pages/FindTask.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -60,6 +61,7 @@ const App = () => (
           <Route path="/api-docs" element={<ApiDocs />} />
           <Route path="/freelancer-platform" element={<FreelancerPlatform />} />
           <Route path="/freelancer-knowledge" element={<FreelancerKnowledge />} />
+          <Route path="/find-task" element={<FindTask />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
