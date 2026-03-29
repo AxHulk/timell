@@ -20,6 +20,7 @@ import CourierPayments from "./pages/CourierPayments.tsx";
 import CleaningPayments from "./pages/CleaningPayments.tsx";
 import TourismPayments from "./pages/TourismPayments.tsx";
 import ConstructionPayments from "./pages/ConstructionPayments.tsx";
+import FotCalculator from "./pages/FotCalculator.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -48,6 +49,7 @@ const App = () => (
           <Route path="/services/cleaning" element={<CleaningPayments />} />
           <Route path="/services/tourism" element={<TourismPayments />} />
           <Route path="/services/construction" element={<ConstructionPayments />} />
+          <Route path="/calculator" element={<FotCalculator />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

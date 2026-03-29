@@ -21,6 +21,7 @@ const menuLinks: Record<string, string> = {
   "Для клининга": "/services/cleaning",
   "Для турагенств": "/services/tourism",
   "Для строительных компаний": "/services/construction",
+  "Калькулятор ФОТ": "/calculator",
 };
 
 const navItems = [
@@ -50,7 +51,7 @@ const navItems = [
       "Для турагенств",
     ],
   },
-  { label: "Калькулятор ФОТ", children: null },
+  { label: "Калькулятор ФОТ", href: "/calculator", children: null },
   {
     label: "База знаний",
     children: ["Блог", "API документация"],
@@ -93,10 +94,16 @@ const Header = () => {
               onMouseEnter={() => item.children && handleEnter(item.label)}
               onMouseLeave={handleLeave}
             >
-              <button className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground rounded-md transition-colors">
-                {item.label}
-                {item.children && <ChevronDown className="h-3.5 w-3.5" />}
-              </button>
+              {"href" in item && item.href ? (
+                <Link to={item.href} className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground rounded-md transition-colors">
+                  {item.label}
+                </Link>
+              ) : (
+                <button className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-foreground/80 hover:text-foreground rounded-md transition-colors">
+                  {item.label}
+                  {item.children && <ChevronDown className="h-3.5 w-3.5" />}
+                </button>
+              )}
               {item.children && openDropdown === item.label && (
                 <div className="absolute top-full left-0 pt-1 z-50">
                   <div className="bg-popover border border-border rounded-lg shadow-lg p-2 min-w-[260px]">
