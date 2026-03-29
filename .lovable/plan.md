@@ -1,67 +1,50 @@
 
-# Timell — Homepage Implementation Plan
 
-## Overview
-Build the full homepage for Timell, an HRTech PaaS platform for managing freelancers/self-employed workers. Light theme with brand colors: purple (#6B3FD9) and orange (#FF6B35). No video backgrounds or animated counters.
+# Исправление калькулятора ФОТ: столбец «СМЗ через Timell» должен быть самым выгодным
 
-## Assets to Include
-- Logo (horizontal variant) embedded in header and footer
-- 3 benefit images (magnifying glass, rocket, monitor) for the "Автоматизируем работу" section
-- Planet/moon orbit images for decorative hero or section backgrounds
+## Проблема
 
-## Sections (top to bottom)
+Все **попеременные** (на человека) затраты в расчётном движке занижены в **10 раз**. Из-за этого экономия Timell на документообороте и зарплате кадровика слишком мала и не компенсирует комиссию сервиса — в итоге столбец «СМЗ без Timell» выходит дешевле, чем «СМЗ через Timell».
 
-### 1. Header
-- Logo left, centered nav with 5 items (dropdowns for "Решения для бизнеса", "Услуги", "База знаний", "Исполнителям"; plain link for "Калькулятор ФОТ")
-- Dropdown submenus as specified in the user's message
-- Right side: "Вход" (ghost button) + "Регистрация" (orange filled button)
-- Sticky header, mobile hamburger menu
+### Текущие vs правильные значения (база: 10 человек / 1 000 000 ₽)
 
-### 2. Hero Section
-- Headline: "Платформа для работы с самозанятыми, физлицами и ИП"
-- Subheadline: "Timell берет на себя всю бумажную и платежную рутину. Легально, безопасно и автоматически."
-- Two CTAs: "Обсудить ваш кейс" (purple) + "Попробовать бесплатно" (orange outline)
-- Right side: decorative planet/orbit illustration
-- Light background with subtle brand pattern
+```text
+Строка                      Сейчас    Нужно (скриншот)
+─────────────────────────────────────────────────────
+Печать (штат)                  25        250
+Печать (СМЗ)                  125      1 250
+Пересылка (штат)             83.3        833
+Пересылка (СМЗ)             1 625     16 250
+Архивирование (штат)           8.3         83
+Архивирование (СМЗ)           33.3        333
+Зарплата кадров (штат)       854.3      8 543
+Зарплата кадров (СМЗ)      1 708.6     17 086
+Зарплата кадров (Timell)     256.3      2 563
+```
 
-### 3. "Автоматизируем работу с внештатным персоналом"
-- 3 cards with uploaded benefit images:
-  - Проверим исполнителей
-  - Проведём платежи
-  - Соберём документы
+### Итоги после исправления (10 чел / 1 000 000 ₽)
 
-### 4. Comparison: "Без Timell vs Через Timell"
-- Two-column comparison table with red crosses vs green checkmarks
-- 4 comparison rows (payments, documents, tax status checks, receipt monitoring)
+```text
+Штат/ГПХ:         1 645 381 ₽
+СМЗ без Timell:    1 111 515 ₽  (-533 866 ₽)
+СМЗ через Timell:  1 103 627 ₽  (-541 754 ₽)  ← самый выгодный ✓
+```
 
-### 5. "Что вы получаете" (Benefits)
-- 2×2 card grid with hover accents:
-  - Интеграция с вашими системами
-  - Эскроу-модель расчетов
-  - Забота об исполнителях
-  - Полная прозрачность
+## Что нужно сделать
 
-### 6. "Функционал платформы"
-- Interactive tabs/list on the left, description on the right
-- 4 features: Массовые выплаты, ЭДО, API-интеграция, Личный кабинет
+### Файл: `src/pages/FotCalculator.tsx`
 
-### 7. "Отраслевые решения"
-- Grid of industry tags/cards (8 industries)
-- CTA: "Получить консультацию по вашей отрасли"
+В функции `calc()` (строки 51–65) умножить все попеременные базовые значения на 10:
 
-### 8. "Как это работает" — 4-Step Timeline
-- Horizontal timeline: Пополнение → Задание → Приемка → Выплата и документы
+- `print_staff`: 25 → 250
+- `print_smz`: 125 → 1250
+- `send_staff`: 83.3 → 833
+- `send_smz`: 1625 → 16250
+- `archive_staff`: 8.3 → 83
+- `archive_smz`: 33.3 → 333
+- `salary_staff`: 854.3 → 8543
+- `salary_smz`: 1708.6 → 17086
+- `salary_timell`: 256.3 → 2563
 
-### 9. "База знаний и Блог"
-- 3 article preview cards with placeholder content
-- Link: "Перейти в Базу знаний"
+Один файл, одно изменение — 9 чисел.
 
-### 10. Lead Form (CTA Section)
-- Purple (#6B3FD9) background, white text
-- Form: Имя, Телефон, Email, dropdown (до 50 / 50-200 / более 200)
-- Button: "Записаться на демо"
-- Privacy policy disclaimer
-
-### 11. Footer
-- Logo, 4 link columns (О компании, Продукты, Информация, Контакты)
-- Bottom: copyright 2026, legal links, "Официальный партнер ФНС"
