@@ -11,6 +11,7 @@ import TaxPayment from "./pages/TaxPayment.tsx";
 import StatusCheck from "./pages/StatusCheck.tsx";
 import PartnerProgram from "./pages/PartnerProgram.tsx";
 import AccountantAutomation from "./pages/AccountantAutomation.tsx";
+import HRPlatform from "./pages/HRPlatform.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/solutions/status-check" element={<StatusCheck />} />
           <Route path="/solutions/partner-program" element={<PartnerProgram />} />
           <Route path="/services/accountant" element={<AccountantAutomation />} />
+          <Route path="/services/hr-platform" element={<HRPlatform />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

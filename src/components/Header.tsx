@@ -12,6 +12,7 @@ const menuLinks: Record<string, string> = {
   "Проверка статуса самозанятого": "/solutions/status-check",
   "Партнёрская программа": "/solutions/partner-program",
   "Для бухгалтеров": "/services/accountant",
+  "HR-платформа": "/services/hr-platform",
 };
 
 const navItems = [
