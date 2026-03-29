@@ -13,14 +13,137 @@ interface CompanyInfo {
   registrationDate?: string;
   activity?: string;
   status?: string;
-  capitalAmount?: string;
-  employeeCount?: string;
 }
 
-function extractText(html: string, regex: RegExp): string | undefined {
-  const match = html.match(regex);
-  if (!match) return undefined;
-  return match[1].replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').trim();
+function clean(s: string | undefined): string | undefined {
+  if (!s) return undefined;
+  return s.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#039;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim() || undefined;
+}
+
+function extract(html: string, regex: RegExp): string | undefined {
+  const m = html.match(regex);
+  return m ? clean(m[1]) : undefined;
+}
+
+const browserHeaders = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+  'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+  'Accept-Encoding': 'gzip, deflate, br',
+  'Cache-Control': 'no-cache',
+  'Pragma': 'no-cache',
+  'Sec-Ch-Ua': '"Chromium";v="131", "Not_A Brand";v="24"',
+  'Sec-Ch-Ua-Mobile': '?0',
+  'Sec-Ch-Ua-Platform': '"Windows"',
+  'Sec-Fetch-Dest': 'document',
+  'Sec-Fetch-Mode': 'navigate',
+  'Sec-Fetch-Site': 'none',
+  'Sec-Fetch-User': '?1',
+  'Upgrade-Insecure-Requests': '1',
+};
+
+async function tryRusprofile(inn: string): Promise<CompanyInfo | null> {
+  // Try direct company page URL pattern
+  const urls = [
+    `https://www.rusprofile.ru/id/${inn}`,
+    `https://www.rusprofile.ru/ip/${inn}`,
+  ];
+
+  for (const url of urls) {
+    try {
+      console.log('Trying URL:', url);
+      const resp = await fetch(url, { 
+        headers: { ...browserHeaders, 'Referer': 'https://www.google.com/' },
+        redirect: 'follow',
+      });
+      
+      console.log('Response status:', resp.status);
+      if (resp.status === 404) continue;
+      if (!resp.ok) continue;
+
+      const html = await resp.text();
+      const company: CompanyInfo = { inn };
+
+      company.name = extract(html, /<h1[^>]*>([\s\S]*?)<\/h1>/)
+        || extract(html, /itemprop="name"[^>]*>([\s\S]*?)<\//);
+      company.director = extract(html, /Руководитель[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/)
+        || extract(html, /Генеральный директор[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/);
+      company.kpp = extract(html, /КПП[\s\S]{0,100}?([\d]{9})/);
+      company.ogrn = extract(html, /ОГРН[ИП]?[\s\S]{0,100}?([\d]{13,15})/);
+      company.registrationDate = extract(html, /(\d{2}\.\d{2}\.\d{4})/);
+      company.address = extract(html, /Юридический адрес[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>/)
+        || extract(html, /itemprop="address"[^>]*>([\s\S]*?)<\//);
+      company.activity = extract(html, /Основной вид деятельности[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>/);
+      company.status = extract(html, /class="[^"]*company-status[^"]*"[^>]*>([\s\S]*?)<\//);
+
+      if (company.name || company.director || company.kpp) {
+        return company;
+      }
+    } catch (e) {
+      console.error('Rusprofile error for', url, ':', e);
+    }
+  }
+  return null;
+}
+
+async function tryEgrul(inn: string): Promise<CompanyInfo | null> {
+  try {
+    // Step 1: Submit search to egrul.nalog.ru
+    const searchResp = await fetch('https://egrul.nalog.ru/', {
+      method: 'POST',
+      headers: {
+        ...browserHeaders,
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Referer': 'https://egrul.nalog.ru/',
+        'Origin': 'https://egrul.nalog.ru',
+      },
+      body: `query=${inn}`,
+    });
+
+    if (!searchResp.ok) {
+      console.error('EGRUL search status:', searchResp.status);
+      return null;
+    }
+
+    const searchData = await searchResp.json();
+    const token = searchData.t;
+    if (!token) {
+      console.error('No EGRUL token received');
+      return null;
+    }
+
+    // Step 2: Wait and fetch results
+    await new Promise(r => setTimeout(r, 2000));
+
+    const resultResp = await fetch(`https://egrul.nalog.ru/search-result/${token}`, {
+      headers: { ...browserHeaders, 'Referer': 'https://egrul.nalog.ru/' },
+    });
+
+    if (!resultResp.ok) {
+      console.error('EGRUL result status:', resultResp.status);
+      return null;
+    }
+
+    const resultData = await resultResp.json();
+    const rows = resultData?.rows;
+    if (!rows || rows.length === 0) return null;
+
+    const row = rows[0];
+    const company: CompanyInfo = {
+      inn: row.i || inn,
+      name: row.n || row.c,
+      ogrn: row.o,
+      kpp: row.p,
+      registrationDate: row.r,
+      address: row.a,
+      director: row.g,
+    };
+
+    return company;
+  } catch (e) {
+    console.error('EGRUL error:', e);
+    return null;
+  }
 }
 
 Deno.serve(async (req) => {
@@ -38,101 +161,24 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Fetch from rusprofile.ru
-    const rpResponse = await fetch(`https://www.rusprofile.ru/search?query=${inn}&type=ul`, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
-      },
-    });
+    // Try rusprofile first, fallback to egrul.nalog.ru
+    let company = await tryRusprofile(inn);
+    const source = company ? 'rusprofile' : null;
 
-    if (!rpResponse.ok) {
-      console.error('Rusprofile response status:', rpResponse.status);
-      return new Response(
-        JSON.stringify({ success: false, error: `Rusprofile вернул статус ${rpResponse.status}` }),
-        { status: 502, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+    if (!company) {
+      console.log('Rusprofile failed, trying EGRUL...');
+      company = await tryEgrul(inn);
     }
 
-    const html = await rpResponse.text();
-    const company: CompanyInfo = { inn };
-
-    // Company name - try multiple patterns
-    company.name = extractText(html, /<h1[^>]*>([\s\S]*?)<\/h1>/) 
-      || extractText(html, /class="[^"]*company-name[^"]*"[^>]*>([\s\S]*?)<\//)
-      || extractText(html, /itemprop="name"[^>]*>([\s\S]*?)<\//);
-
-    // Director / head
-    company.director = extractText(html, /Руководитель[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/)
-      || extractText(html, /Генеральный директор[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/)
-      || extractText(html, /itemprop="employee"[\s\S]*?itemprop="name"[^>]*>([\s\S]*?)<\//);
-
-    // KPP
-    company.kpp = extractText(html, /КПП[\s\S]*?<span[^>]*>([\d]+)<\/span>/)
-      || extractText(html, /КПП[\s:]*?([\d]{9})/);
-
-    // OGRN
-    company.ogrn = extractText(html, /ОГРН[ИП]?[\s\S]*?<span[^>]*>([\d]+)<\/span>/)
-      || extractText(html, /ОГРН[ИП]?[\s:]*?([\d]{13,15})/);
-
-    // Registration date
-    company.registrationDate = extractText(html, /Дата регистрации[\s\S]*?(\d{2}\.\d{2}\.\d{4})/)
-      || extractText(html, /Зарегистрирован[\s\S]*?(\d{2}\.\d{2}\.\d{4})/);
-
-    // Address
-    company.address = extractText(html, /Юридический адрес[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>/)
-      || extractText(html, /itemprop="address"[^>]*>([\s\S]*?)<\//);
-
-    // Main activity
-    company.activity = extractText(html, /Основной вид деятельности[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>/)
-      || extractText(html, /ОКВЭД[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>/);
-
-    // Status (active/liquidated)
-    company.status = extractText(html, /class="[^"]*company-status[^"]*"[^>]*>([\s\S]*?)<\//)
-      || extractText(html, /Статус[\s\S]*?<span[^>]*class="[^"]*"[^>]*>([\s\S]*?)<\/span>/);
-
-    // Capital
-    company.capitalAmount = extractText(html, /Уставный капитал[\s\S]*?([\d\s]+[\d])\s*₽/)
-      || extractText(html, /Уставный капитал[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>/);
-
-    // Employee count
-    company.employeeCount = extractText(html, /Численность[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>/);
-
-    // Check if we got meaningful data
-    const hasData = company.name || company.director || company.kpp || company.ogrn;
-
-    if (!hasData) {
-      // Maybe it's an individual (IP) or self-employed, try IP search
-      const ipResponse = await fetch(`https://www.rusprofile.ru/search?query=${inn}&type=ip`, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-          'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
-        },
-      });
-
-      if (ipResponse.ok) {
-        const ipHtml = await ipResponse.text();
-        company.name = extractText(ipHtml, /<h1[^>]*>([\s\S]*?)<\/h1>/)
-          || extractText(ipHtml, /class="[^"]*company-name[^"]*"[^>]*>([\s\S]*?)<\//);
-        company.ogrn = extractText(ipHtml, /ОГРНИП[\s\S]*?<span[^>]*>([\d]+)<\/span>/)
-          || extractText(ipHtml, /ОГРНИП[\s:]*?([\d]{15})/);
-        company.registrationDate = extractText(ipHtml, /Дата регистрации[\s\S]*?(\d{2}\.\d{2}\.\d{4})/);
-        company.address = extractText(ipHtml, /Адрес[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>/);
-        company.activity = extractText(ipHtml, /Основной вид деятельности[\s\S]*?<span[^>]*>([\s\S]*?)<\/span>/);
-        company.status = extractText(ipHtml, /class="[^"]*company-status[^"]*"[^>]*>([\s\S]*?)<\//);
-      }
-    }
-
-    const finalHasData = company.name || company.director || company.kpp || company.ogrn;
+    const found = !!(company && (company.name || company.director || company.kpp || company.ogrn));
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        found: !!finalHasData,
-        company: finalHasData ? company : null,
-        message: finalHasData ? undefined : 'Данные по указанному ИНН не найдены'
+      JSON.stringify({
+        success: true,
+        found,
+        company: found ? company : null,
+        source: found ? (source || 'egrul') : undefined,
+        message: found ? undefined : 'Данные по указанному ИНН не найдены',
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
