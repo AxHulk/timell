@@ -80,10 +80,18 @@ const BlogArticle = () => {
               {article.title}
             </h1>
 
-            {/* Date */}
-            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-10">
-              <Calendar className="h-4 w-4" />
-              {article.date}
+            {/* Date & Reading time */}
+            <div className="flex items-center gap-4 text-sm text-muted-foreground mb-10">
+              <div className="flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                {article.date}
+              </div>
+              {readingTime && (
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-muted">
+                  <Clock className="h-3.5 w-3.5" />
+                  {readingTime}
+                </div>
+              )}
             </div>
 
             {/* Content */}
