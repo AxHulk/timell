@@ -3,8 +3,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Shield, Check, Clock, FileText, AlertTriangle, TrendingDown, UserX, Ban, ChevronDown, Loader2, ExternalLink } from "lucide-react";
+import { Shield, Check, Clock, FileText, AlertTriangle, TrendingDown, UserX, Ban, ChevronDown, Building2, User, MapPin, Loader2, Briefcase, Calendar, Hash } from "lucide-react";
 import heroImg from "@/assets/status-check/hero.png";
+import { supabase } from "@/integrations/supabase/client";
 
 const scenarios = [
   { icon: TrendingDown, title: "Превышение годового дохода", desc: "Если доход самозанятого превышает 2,4 млн рублей в год, он автоматически теряет статус плательщика НПД и должен перейти на другой налоговый режим." },
