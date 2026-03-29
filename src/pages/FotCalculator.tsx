@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -158,20 +158,16 @@ const GroupRow = ({
 
 /* ── page ── */
 const FotCalculator = () => {
-  const [peopleStr, setPeopleStr] = useState("10");
-  const [fotStr, setFotStr] = useState("1 000 000");
+  const [people, setPeople] = useState(10);
+  const [fot, setFot] = useState(1000000);
   const [executorCount, setExecutorCount] = useState("");
 
-  const people = parseInt(peopleStr.replace(/\s/g, "")) || 0;
-  const fot = parseInt(fotStr.replace(/\s/g, "")) || 0;
+  const r = calc(Math.max(people, 1), Math.max(fot, 1));
 
-  const r = useMemo(() => calc(Math.max(people, 1), Math.max(fot, 1)), [people, fot]);
+  const formatInput = (n: number) =>
+    n ? n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "";
 
-  const handleFotChange = (v: string) => {
-    const digits = v.replace(/[^\d]/g, "");
-    if (!digits) { setFotStr(""); return; }
-    setFotStr(parseInt(digits).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "));
-  };
+  const parseInput = (v: string) => parseInt(v.replace(/\D/g, "")) || 0;
 
   const savingSmz = r.total.smz - r.total.staff;
   const savingTimell = r.total.timell - r.total.staff;
@@ -255,20 +251,18 @@ const FotCalculator = () => {
             <div>
               <label className="text-sm text-muted-foreground mb-1.5 block">Количество человек</label>
               <Input
-                value={peopleStr}
-                onChange={(e) => setPeopleStr(e.target.value.replace(/[^\d]/g, ""))}
+                value={formatInput(people)}
+                onChange={(e) => setPeople(parseInput(e.target.value))}
                 className="text-lg h-12"
               />
             </div>
             <div>
               <label className="text-sm text-muted-foreground mb-1.5 block">ФОТ*</label>
-              <div className="relative">
-                <Input
-                  value={fotStr}
-                  onChange={(e) => handleFotChange(e.target.value)}
-                  className="text-lg h-12"
-                />
-              </div>
+              <Input
+                value={formatInput(fot)}
+                onChange={(e) => setFot(parseInput(e.target.value))}
+                className="text-lg h-12"
+              />
             </div>
           </div>
 
