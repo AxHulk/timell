@@ -82,6 +82,16 @@ const App = () => (
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/documents" element={<LegalDocuments />} />
+          <Route path="/documents/user-agreement" element={<UserAgreement />} />
+          <Route path="/documents/customer-agreement" element={<CustomerAgreement />} />
+          <Route path="/documents/contract-template" element={<ContractTemplate />} />
+          <Route path="/documents/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/documents/consent-registration" element={<ConsentPersonalData />} />
+          <Route path="/documents/consent-website-form" element={<ConsentWebsiteForm />} />
+          <Route path="/documents/consent-support" element={<ConsentSupport />} />
+          <Route path="/documents/data-processing-notice" element={<DataProcessingNotice />} />
+          <Route path="/documents/cookie-policy" element={<CookiePolicy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
