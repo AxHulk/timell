@@ -364,7 +364,7 @@ const OutsourcingPayments = () => {
           </Button>
           <p className="text-xs text-primary-foreground/50 mt-4">
             Отправляя форму, вы соглашаетесь с{" "}
-            <a href="#" className="underline">Политикой конфиденциальности</a>
+            <a href="/documents/privacy-policy" target="_blank" className="underline">Политикой конфиденциальности</a>
           </p>
         </div>
       </section>

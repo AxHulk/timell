@@ -32,7 +32,7 @@ const LeadForm = () => {
         </Button>
         <p className="text-xs text-primary-foreground/50 mt-4">
           Нажимая кнопку, вы соглашаетесь с{" "}
-          <a href="#" className="underline">политикой конфиденциальности</a>
+          <a href="/documents/privacy-policy" target="_blank" className="underline">политикой конфиденциальности</a>
         </p>
       </div>
     </section>
