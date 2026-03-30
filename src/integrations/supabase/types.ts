@@ -17,6 +17,8 @@ export type Database = {
       profiles: {
         Row: {
           balance: number | null
+          bank_account: string | null
+          bik: string | null
           commission_rate: number | null
           company_name: string | null
           created_at: string | null
@@ -34,6 +36,8 @@ export type Database = {
         }
         Insert: {
           balance?: number | null
+          bank_account?: string | null
+          bik?: string | null
           commission_rate?: number | null
           company_name?: string | null
           created_at?: string | null
@@ -51,6 +55,8 @@ export type Database = {
         }
         Update: {
           balance?: number | null
+          bank_account?: string | null
+          bik?: string | null
           commission_rate?: number | null
           company_name?: string | null
           created_at?: string | null
