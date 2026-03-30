@@ -81,7 +81,8 @@ Deno.serve(async (req) => {
         );
       }
 
-      const auth = btoa(`${smsEmail}:${smsApiKey}`);
+      const encoder = new TextEncoder();
+      const auth = btoa(String.fromCharCode(...encoder.encode(`${smsEmail}:${smsApiKey}`)));
       const smsUrl = `https://gate.smsaero.ru/v2/sms/send?number=${normalizedPhone}&text=${encodeURIComponent(`Timell: ваш код подтверждения ${smsCode}`)}&sign=SMS Aero`;
 
       const smsResponse = await fetch(smsUrl, {
