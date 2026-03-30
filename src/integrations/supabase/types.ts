@@ -68,6 +68,33 @@ export type Database = {
         }
         Relationships: []
       }
+      sms_codes: {
+        Row: {
+          attempts: number | null
+          code: string
+          created_at: string | null
+          id: string
+          phone: string
+          verified: boolean | null
+        }
+        Insert: {
+          attempts?: number | null
+          code: string
+          created_at?: string | null
+          id?: string
+          phone: string
+          verified?: boolean | null
+        }
+        Update: {
+          attempts?: number | null
+          code?: string
+          created_at?: string | null
+          id?: string
+          phone?: string
+          verified?: boolean | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
