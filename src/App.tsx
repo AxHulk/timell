@@ -33,6 +33,16 @@ import Register from "./pages/Register.tsx";
 import Login from "./pages/Login.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import LegalDocuments from "./pages/LegalDocuments.tsx";
+import UserAgreement from "./pages/UserAgreement.tsx";
+import CustomerAgreement from "./pages/CustomerAgreement.tsx";
+import ContractTemplate from "./pages/ContractTemplate.tsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
+import ConsentPersonalData from "./pages/ConsentPersonalData.tsx";
+import ConsentWebsiteForm from "./pages/ConsentWebsiteForm.tsx";
+import ConsentSupport from "./pages/ConsentSupport.tsx";
+import DataProcessingNotice from "./pages/DataProcessingNotice.tsx";
+import CookiePolicy from "./pages/CookiePolicy.tsx";
 
 const queryClient = new QueryClient();
 

@@ -38,9 +38,10 @@ const Footer = () => (
       </div>
       <div className="border-t border-border pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
         <span>© 2026 Timell. Все права защищены.</span>
-        <div className="flex items-center gap-4">
-          <a href="#" className="hover:text-foreground">Политика конфиденциальности</a>
-          <a href="#" className="hover:text-foreground">Пользовательское соглашение</a>
+        <div className="flex items-center gap-4 flex-wrap">
+          <Link to="/documents/privacy-policy" className="hover:text-foreground">Политика конфиденциальности</Link>
+          <Link to="/documents/user-agreement" className="hover:text-foreground">Пользовательское соглашение</Link>
+          <Link to="/documents" className="hover:text-foreground">Юридические документы</Link>
         </div>
         <span className="text-xs">Официальный партнёр ФНС</span>
       </div>
