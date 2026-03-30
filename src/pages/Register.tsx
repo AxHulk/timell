@@ -103,11 +103,10 @@ const Register = () => {
   const handleComplete = async () => {
     setLoading(true);
 
-    // Sign up with phone as email placeholder
-    const fakeEmail = `${form.phone.replace(/\D/g, "")}@timell.app`;
+    // Sign up with phone number (no fake email)
     const tempPassword = crypto.randomUUID();
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-      email: fakeEmail,
+      phone: form.phone,
       password: tempPassword,
     });
 
