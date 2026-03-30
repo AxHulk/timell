@@ -74,16 +74,17 @@ Deno.serve(async (req) => {
       const smsEmail = Deno.env.get("SMSAERO_EMAIL");
       const smsApiKey = Deno.env.get("SMSAERO_API_KEY");
 
-      if (!smsEmail || !smsApiKey) {
+      if (!smsEmail?.trim() || !smsApiKey?.trim()) {
         return new Response(
           JSON.stringify({ error: "SMS сервис не настроен" }),
           { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
 
-      const encoder = new TextEncoder();
-      const auth = btoa(String.fromCharCode(...encoder.encode(`${smsEmail}:${smsApiKey}`)));
-      const smsUrl = `https://gate.smsaero.ru/v2/sms/send?number=${normalizedPhone}&text=${encodeURIComponent(`Timell: ваш код подтверждения ${smsCode}`)}&sign=SMS Aero`;
+      const cleanEmail = smsEmail.trim();
+      const cleanKey = smsApiKey.trim();
+      const auth = btoa(`${cleanEmail}:${cleanKey}`);
+      const smsUrl = `https://gate.smsaero.ru/v2/sms/send?number=${normalizedPhone}&text=${encodeURIComponent(`Timell: ваш код подтверждения ${smsCode}`)}&sign=SMS%20Aero`;
 
       const smsResponse = await fetch(smsUrl, {
         method: "GET",
