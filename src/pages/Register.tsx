@@ -287,7 +287,7 @@ const Register = () => {
                 <div>
                   <Label>Код подтверждения</Label>
                   <Input placeholder="Введите код" value={form.phoneCode} onChange={(e) => update({ phoneCode: e.target.value })} />
-                  <p className="text-xs text-muted-foreground mt-1">Mock-режим: введите 1234</p>
+                  <p className="text-xs text-muted-foreground mt-1">Код действителен 5 минут</p>
                 </div>
               )}
               <div className="flex items-center gap-2">
