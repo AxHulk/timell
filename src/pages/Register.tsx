@@ -79,19 +79,42 @@ const Register = () => {
     setStep(3);
   };
 
-  const handleSendCode = () => {
+  const handleSendCode = async () => {
     if (!form.phone || form.phone.length < 10) { toast.error("Введите номер телефона"); return; }
-    setCodeSent(true);
-    toast.success("Код отправлен (mock: 1234)");
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("sms-verify", {
+        body: { action: "send", phone: form.phone },
+      });
+      if (error || !data?.success) {
+        toast.error(data?.error || "Ошибка отправки SMS");
+      } else {
+        setCodeSent(true);
+        toast.success("Код отправлен на ваш номер");
+      }
+    } catch {
+      toast.error("Ошибка соединения");
+    }
+    setLoading(false);
   };
 
-  const handleVerifyCode = () => {
-    if (form.phoneCode === "1234") {
-      toast.success("Телефон подтверждён!");
-      setStep(4);
-    } else {
-      toast.error("Неверный код. Попробуйте 1234");
+  const handleVerifyCode = async () => {
+    if (!form.phoneCode) { toast.error("Введите код"); return; }
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("sms-verify", {
+        body: { action: "verify", phone: form.phone, code: form.phoneCode },
+      });
+      if (error || !data?.success) {
+        toast.error(data?.error || "Неверный код");
+      } else {
+        toast.success("Телефон подтверждён!");
+        setStep(4);
+      }
+    } catch {
+      toast.error("Ошибка соединения");
     }
+    setLoading(false);
   };
 
   const handleComplete = async () => {
@@ -264,7 +287,7 @@ const Register = () => {
                 <div>
                   <Label>Код подтверждения</Label>
                   <Input placeholder="Введите код" value={form.phoneCode} onChange={(e) => update({ phoneCode: e.target.value })} />
-                  <p className="text-xs text-muted-foreground mt-1">Mock-режим: введите 1234</p>
+                  <p className="text-xs text-muted-foreground mt-1">Код действителен 5 минут</p>
                 </div>
               )}
               <div className="flex items-center gap-2">
