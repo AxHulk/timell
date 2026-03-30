@@ -328,7 +328,7 @@ const FotCalculator = () => {
               Рассчитать
             </Button>
             <p className="text-xs text-muted-foreground text-center mt-3">
-              Отправляя форму, вы соглашаетесь с <a href="#" className="underline">Политикой конфиденциальности</a>.
+              Отправляя форму, вы соглашаетесь с Отправляя форму, вы соглашаетесь с <a href="/documents/privacy-policy" target="_blank" className="underline">Политикой конфиденциальности</a>..
             </p>
           </div>
         </div>
