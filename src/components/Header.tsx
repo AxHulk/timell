@@ -132,8 +132,8 @@ const Header = () => {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
-          <Button variant="ghost" size="sm">Вход</Button>
-          <Button size="sm" className="bg-secondary hover:bg-secondary/90 text-secondary-foreground">Регистрация</Button>
+          <Link to="/login"><Button variant="ghost" size="sm">Вход</Button></Link>
+          <Link to="/register"><Button size="sm" className="bg-secondary hover:bg-secondary/90 text-secondary-foreground">Регистрация</Button></Link>
         </div>
 
         {/* Mobile toggle */}
@@ -169,8 +169,8 @@ const Header = () => {
             </div>
           ))}
           <div className="flex gap-3 pt-4 border-t border-border">
-            <Button variant="ghost" size="sm" className="flex-1">Вход</Button>
-            <Button size="sm" className="flex-1 bg-secondary hover:bg-secondary/90 text-secondary-foreground">Регистрация</Button>
+            <Link to="/login" className="flex-1"><Button variant="ghost" size="sm" className="w-full">Вход</Button></Link>
+            <Link to="/register" className="flex-1"><Button size="sm" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground">Регистрация</Button></Link>
           </div>
         </div>
       )}
