@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PhoneInput } from "@/components/PhoneInput";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import executorIcon from "@/assets/icon-executor.png";
@@ -28,16 +29,14 @@ const EXECUTOR_TAX = [
   { value: "pao", label: "Публичное акционерное общество" },
 ];
 
-const STEPS_CLIENT = ["ОПФ и ИНН", "Регистрация", "Подтверждение", "Данные профиля", "Завершение"];
-const STEPS_EXECUTOR = ["Общие данные", "Регистрация", "Подтверждение", "Данные профиля", "Завершение"];
+const STEPS_CLIENT = ["ОПФ и ИНН", "Подтверждение", "Данные профиля", "Завершение"];
+const STEPS_EXECUTOR = ["Общие данные", "Подтверждение", "Данные профиля", "Завершение"];
 
 interface FormData {
   role: Role | null;
   opf: string;
   taxStatus: string;
   inn: string;
-  email: string;
-  password: string;
   phone: string;
   phoneCode: string;
   firstName: string;
@@ -51,36 +50,20 @@ interface FormData {
 
 const Register = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState(0); // 0=role, 1-5=wizard steps
+  const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [codeSent, setCodeSent] = useState(false);
   const [form, setForm] = useState<FormData>({
-    role: null, opf: "", taxStatus: "", inn: "", email: "", password: "",
-    phone: "", phoneCode: "", firstName: "", lastName: "", patronymic: "",
+    role: null, opf: "", taxStatus: "", inn: "",
+    phone: "+7", phoneCode: "", firstName: "", lastName: "", patronymic: "",
     companyName: "", noPatronymic: false, agreeTerms: false, agreePersonalData: false,
   });
 
   const update = (fields: Partial<FormData>) => setForm((p) => ({ ...p, ...fields }));
   const steps = form.role === "client" ? STEPS_CLIENT : STEPS_EXECUTOR;
-  const progress = step === 0 ? 0 : (step / steps.length) * 100;
-
-  const handleSignup = async () => {
-    if (!form.email || !form.password) { toast.error("Заполните email и пароль"); return; }
-    if (form.password.length < 6) { toast.error("Пароль минимум 6 символов"); return; }
-    setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email: form.email,
-      password: form.password,
-      options: { emailRedirectTo: window.location.origin },
-    });
-    setLoading(false);
-    if (error) { toast.error(error.message); return; }
-    toast.success("Аккаунт создан!");
-    setStep(3);
-  };
 
   const handleSendCode = async () => {
-    if (!form.phone || form.phone.length < 10) { toast.error("Введите номер телефона"); return; }
+    if (!form.phone || form.phone.length < 12) { toast.error("Введите номер телефона"); return; }
     setLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke("sms-verify", {
@@ -109,7 +92,7 @@ const Register = () => {
         toast.error(data?.error || "Неверный код");
       } else {
         toast.success("Телефон подтверждён!");
-        setStep(4);
+        setStep(3);
       }
     } catch {
       toast.error("Ошибка соединения");
@@ -119,11 +102,25 @@ const Register = () => {
 
   const handleComplete = async () => {
     setLoading(true);
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { toast.error("Ошибка авторизации"); setLoading(false); return; }
+
+    // Sign up with phone as email placeholder
+    const fakeEmail = `${form.phone.replace(/\D/g, "")}@timell.app`;
+    const tempPassword = crypto.randomUUID();
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+      email: fakeEmail,
+      password: tempPassword,
+    });
+
+    if (signUpError || !signUpData.user) {
+      toast.error("Ошибка создания аккаунта: " + (signUpError?.message || ""));
+      setLoading(false);
+      return;
+    }
+
+    const userId = signUpData.user.id;
 
     const { error: profileError } = await supabase.from("profiles").insert({
-      user_id: user.id,
+      user_id: userId,
       opf: form.role === "client" ? form.opf : null,
       tax_status: form.role === "executor" ? form.taxStatus : null,
       inn: form.inn,
@@ -135,14 +132,17 @@ const Register = () => {
     });
 
     const { error: roleError } = await supabase.from("user_roles").insert({
-      user_id: user.id,
+      user_id: userId,
       role: form.role!,
     });
 
     setLoading(false);
-    if (profileError || roleError) { toast.error("Ошибка сохранения: " + (profileError?.message || roleError?.message)); return; }
+    if (profileError || roleError) {
+      toast.error("Ошибка сохранения: " + (profileError?.message || roleError?.message));
+      return;
+    }
     toast.success("Регистрация завершена!");
-    setStep(5);
+    setStep(4);
   };
 
   // Step 0: Role selection
@@ -184,18 +184,21 @@ const Register = () => {
       {/* Progress stepper */}
       <div className="max-w-2xl w-full mb-6">
         <div className="flex items-center justify-between mb-2">
-          {steps.map((s, i) => (
-            <div key={s} className="flex flex-col items-center flex-1">
-              <div className="flex items-center w-full">
-                {i > 0 && <div className={`flex-1 h-0.5 ${i < step ? "bg-primary" : "bg-border"}`} />}
-                <div className={`w-3 h-3 rounded-full shrink-0 ${i < step ? "bg-primary" : i === step ? "bg-primary ring-4 ring-primary/20" : "bg-border"}`} />
-                {i < steps.length - 1 && <div className={`flex-1 h-0.5 ${i < step - 1 ? "bg-primary" : "bg-border"}`} />}
+          {steps.map((s, i) => {
+            const stepNum = i + 1;
+            return (
+              <div key={s} className="flex flex-col items-center flex-1">
+                <div className="flex items-center w-full">
+                  {i > 0 && <div className={`flex-1 h-0.5 ${i < step ? "bg-primary" : "bg-border"}`} />}
+                  <div className={`w-3 h-3 rounded-full shrink-0 ${i < step ? "bg-primary" : i === step ? "bg-primary ring-4 ring-primary/20" : "bg-border"}`} />
+                  {i < steps.length - 1 && <div className={`flex-1 h-0.5 ${i < step - 1 ? "bg-primary" : "bg-border"}`} />}
+                </div>
+                <span className={`text-xs mt-1 text-center ${i === step ? "font-bold text-foreground" : "text-muted-foreground"}`}>
+                  {stepNum} шаг<br /><span className="text-[10px]">{s}</span>
+                </span>
               </div>
-              <span className={`text-xs mt-1 text-center ${i === step ? "font-bold text-foreground" : "text-muted-foreground"}`}>
-                {i + 1} шаг<br /><span className="text-[10px]">{s}</span>
-              </span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -247,30 +250,8 @@ const Register = () => {
           </div>
         )}
 
-        {/* Step 2: Email + Password signup */}
+        {/* Step 2: Phone verification */}
         {step === 2 && (
-          <div>
-            <h2 className="text-xl font-bold mb-2">Регистрация аккаунта</h2>
-            <p className="text-muted-foreground mb-6">Введите email и пароль для создания аккаунта</p>
-            <div className="space-y-4">
-              <div>
-                <Label>Email</Label>
-                <Input type="email" placeholder="email@example.com" value={form.email} onChange={(e) => update({ email: e.target.value })} />
-              </div>
-              <div>
-                <Label>Пароль</Label>
-                <Input type="password" placeholder="Минимум 6 символов" value={form.password} onChange={(e) => update({ password: e.target.value })} />
-              </div>
-            </div>
-            <div className="flex justify-between mt-6">
-              <Button variant="outline" onClick={() => setStep(1)}>Предыдущий шаг</Button>
-              <Button onClick={handleSignup} disabled={loading}>{loading ? "Создание..." : "Следующий шаг"}</Button>
-            </div>
-          </div>
-        )}
-
-        {/* Step 3: Phone verification (mock) */}
-        {step === 3 && (
           <div>
             <h2 className="text-xl font-bold mb-2">Подтверждение телефона</h2>
             <p className="text-muted-foreground mb-6">Введите ваш номер телефона, на который поступит СМС с кодом подтверждения</p>
@@ -281,7 +262,7 @@ const Register = () => {
               </div>
               <div>
                 <Label>Номер телефона</Label>
-                <Input placeholder="+7 (___) ___-__-__" value={form.phone} onChange={(e) => update({ phone: e.target.value })} />
+                <PhoneInput value={form.phone} onChange={(v) => update({ phone: v })} />
               </div>
               {codeSent && (
                 <div>
@@ -297,9 +278,13 @@ const Register = () => {
             </div>
             <div className="mt-6">
               {!codeSent ? (
-                <Button className="w-full" onClick={handleSendCode} disabled={!form.phone || !form.agreePersonalData}>Получить код</Button>
+                <Button className="w-full" onClick={handleSendCode} disabled={loading || form.phone.length < 12 || !form.agreePersonalData || !form.firstName}>
+                  {loading ? "Отправка..." : "Получить код"}
+                </Button>
               ) : (
-                <Button className="w-full" onClick={handleVerifyCode}>Подтвердить</Button>
+                <Button className="w-full" onClick={handleVerifyCode} disabled={loading}>
+                  {loading ? "Проверка..." : "Подтвердить"}
+                </Button>
               )}
             </div>
             <p className="text-xs text-center text-muted-foreground mt-4">
@@ -308,8 +293,8 @@ const Register = () => {
           </div>
         )}
 
-        {/* Step 4: Profile data */}
-        {step === 4 && (
+        {/* Step 3: Profile data */}
+        {step === 3 && (
           <div>
             <h2 className="text-xl font-bold mb-2">Заполнение профиля</h2>
             <p className="text-muted-foreground mb-6">Внимательно проверьте заполненные поля ниже</p>
@@ -338,7 +323,7 @@ const Register = () => {
               )}
             </div>
             <div className="flex justify-between mt-6">
-              <Button variant="outline" onClick={() => setStep(3)}>Предыдущий шаг</Button>
+              <Button variant="outline" onClick={() => { setStep(2); setCodeSent(false); }}>Предыдущий шаг</Button>
               <Button onClick={handleComplete} disabled={loading || !form.lastName || !form.firstName}>
                 {loading ? "Сохранение..." : "Следующий шаг"}
               </Button>
@@ -346,8 +331,8 @@ const Register = () => {
           </div>
         )}
 
-        {/* Step 5: Completion */}
-        {step === 5 && (
+        {/* Step 4: Completion */}
+        {step === 4 && (
           <div>
             <h2 className="text-xl font-bold mb-2">Спасибо за регистрацию!</h2>
             <p className="text-muted-foreground mb-6">
