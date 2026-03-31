@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import logoImg from "@/assets/logo-horizontal.png";
 
 const columns = [
-  { title: "О компании", links: [{ label: "О нас", href: "#" }, { label: "Команда", href: "#" }, { label: "Карьера", href: "#" }, { label: "Контакты", href: "#" }] },
+  { title: "О компании", links: [{ label: "О нас", href: "/about" }, { label: "Контакты", href: "/about#contacts" }] },
   { title: "Продукты", links: [{ label: "Для бизнеса", href: "#" }, { label: "Для исполнителей", href: "/freelancer-platform" }, { label: "API", href: "/api-docs" }, { label: "Калькулятор ФОТ", href: "/calculator" }] },
   { title: "Информация", links: [{ label: "Блог", href: "/blog" }, { label: "База знаний", href: "/freelancer-knowledge" }, { label: "FAQ", href: "/faq" }, { label: "Партнёрская программа", href: "/solutions/partner-program" }] },
   { title: "Контакты", links: [{ label: "support@timell.ru", href: "mailto:support@timell.ru" }, { label: "+7 (800) 000-00-00", href: "tel:+78000000000" }, { label: "Москва, Россия", href: "#" }] },
