@@ -20,12 +20,12 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: 2. Установка Node.js (если нужно)
+      - name: 2. Установка Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: 3. Установка зависимостей (npm)
+      - name: 3. Установка зависимостей
         run: npm install
 
       - name: 4. Сборка проекта
@@ -40,5 +40,11 @@ jobs:
             --exclude=".env" \
             ${{ github.workspace }}/dist/ /var/www/timell/dist/
 
-      - name: 6. Перезапуск Nginx
+      - name: 6. Исправление прав доступа
+        run: |
+          sudo find /var/www/timell/dist -type d -exec chmod 755 {} \;
+          sudo find /var/www/timell/dist -type f -exec chmod 644 {} \;
+          sudo chown -R github-runner:www-data /var/www/timell/dist
+
+      - name: 7. Перезапуск Nginx
         run: sudo systemctl restart nginx.service
