@@ -53,6 +53,7 @@ const joinSteps = [
 
 const PartnerProgram = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [consentPd, setConsentPd] = useState(false);
 
   return (
     <div className="min-h-screen">

@@ -54,6 +54,7 @@ const benefits = [
 
 const Integration1C = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const [consentPd, setConsentPd] = useState(false);
 
   return (
     <div className="min-h-screen">

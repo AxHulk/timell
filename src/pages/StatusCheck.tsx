@@ -67,6 +67,7 @@ const faq = [
 const StatusCheck = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [inn, setInn] = useState("");
+  const [consentPd, setConsentPd] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<{

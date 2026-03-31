@@ -48,7 +48,10 @@ const industries = [
   { icon: iconScale, label: "HoReCa" },
 ];
 
-const TaxPayment = () => (
+const TaxPayment = () => {
+  const [consentPd, setConsentPd] = useState(false);
+
+  return (
   <div className="min-h-screen">
     <Header />
 

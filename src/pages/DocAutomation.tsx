@@ -49,7 +49,10 @@ const tools = [
   { icon: Ban, img: benefit5, title: "Управление рисками", desc: "Блокируйте ненадёжных исполнителей на уровне платформы." },
 ];
 
-const DocAutomation = () => (
+const DocAutomation = () => {
+  const [consentPd, setConsentPd] = useState(false);
+
+  return (
   <div className="min-h-screen">
     <Header />
 

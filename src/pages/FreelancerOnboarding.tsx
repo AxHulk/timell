@@ -54,7 +54,10 @@ const detailItems = [
   { img: risk4, title: "Отсутствие проблем с реквизитами", desc: "Не нужно запрашивать и хранить реквизиты. Исполнитель получит деньги в Timell и сам разберётся с зачислением." },
 ];
 
-const FreelancerOnboarding = () => (
+const FreelancerOnboarding = () => {
+  const [consentPd, setConsentPd] = useState(false);
+
+  return (
   <div className="min-h-screen">
     <Header />
 

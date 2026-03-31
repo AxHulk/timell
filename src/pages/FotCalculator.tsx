@@ -162,6 +162,7 @@ const FotCalculator = () => {
   const [people, setPeople] = useState(10);
   const [fot, setFot] = useState(1000000);
   const [executorCount, setExecutorCount] = useState("");
+  const [consentPd, setConsentPd] = useState(false);
 
   const r = calc(Math.max(people, 1), Math.max(fot, 1));
 
