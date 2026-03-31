@@ -375,13 +375,10 @@ const ConstructionPayments = () => {
             <option value="200+" className="text-foreground">От 201 и более</option>
             <option value="self" className="text-foreground">Я сам исполнитель</option>
           </select>
-          <Button size="lg" className="w-full sm:w-auto px-12 bg-secondary hover:bg-secondary/90 text-secondary-foreground text-base font-bold">
+          <ConsentCheckbox id="consent-construction" checked={consentPd} onCheckedChange={setConsentPd} variant="dark" className="mt-4" />
+          <Button size="lg" className="w-full sm:w-auto px-12 bg-secondary hover:bg-secondary/90 text-secondary-foreground text-base font-bold mt-4" disabled={!consentPd}>
             Отправить
           </Button>
-          <p className="text-xs text-primary-foreground/50 mt-4">
-            Отправляя форму, вы соглашаетесь с{" "}
-            <a href="/documents/privacy-policy" target="_blank" className="underline">Политикой конфиденциальности</a>
-          </p>
         </div>
       </section>
 
