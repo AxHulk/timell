@@ -43,6 +43,7 @@ import ConsentWebsiteForm from "./pages/ConsentWebsiteForm.tsx";
 import ConsentSupport from "./pages/ConsentSupport.tsx";
 import DataProcessingNotice from "./pages/DataProcessingNotice.tsx";
 import CookiePolicy from "./pages/CookiePolicy.tsx";
+import About from "./pages/About.tsx";
 
 const queryClient = new QueryClient();
 
@@ -92,6 +93,7 @@ const App = () => (
           <Route path="/documents/consent-support" element={<ConsentSupport />} />
           <Route path="/documents/data-processing-notice" element={<DataProcessingNotice />} />
           <Route path="/documents/cookie-policy" element={<CookiePolicy />} />
+          <Route path="/about" element={<About />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
