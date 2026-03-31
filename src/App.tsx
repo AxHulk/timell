@@ -43,6 +43,7 @@ import ConsentWebsiteForm from "./pages/ConsentWebsiteForm.tsx";
 import ConsentSupport from "./pages/ConsentSupport.tsx";
 import DataProcessingNotice from "./pages/DataProcessingNotice.tsx";
 import CookiePolicy from "./pages/CookiePolicy.tsx";
+import About from "./pages/About.tsx";
 
 const queryClient = new QueryClient();
 
