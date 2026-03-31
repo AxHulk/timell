@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 
 const LeadForm = () => {
   const [size, setSize] = useState("");
+  const [consentPd, setConsentPd] = useState(false);
 
   return (
     <section className="py-20 bg-primary text-primary-foreground">
@@ -27,13 +29,10 @@ const LeadForm = () => {
             <option value="200+" className="text-foreground">более 200</option>
           </select>
         </div>
-        <Button size="lg" className="w-full sm:w-auto px-12 bg-secondary hover:bg-secondary/90 text-secondary-foreground text-base font-bold">
+        <ConsentCheckbox id="consent-lead" checked={consentPd} onCheckedChange={setConsentPd} variant="dark" className="mb-4 text-left" />
+        <Button size="lg" className="w-full sm:w-auto px-12 bg-secondary hover:bg-secondary/90 text-secondary-foreground text-base font-bold" disabled={!consentPd}>
           Записаться на демо
         </Button>
-        <p className="text-xs text-primary-foreground/50 mt-4">
-          Нажимая кнопку, вы соглашаетесь с{" "}
-          <a href="/documents/privacy-policy" target="_blank" className="underline">политикой конфиденциальности</a>
-        </p>
       </div>
     </section>
   );

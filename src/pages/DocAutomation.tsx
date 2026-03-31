@@ -1,6 +1,8 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { Check, FileText, Shield, Globe, Users, Link2, Ban, ChevronRight } from "lucide-react";
 
 import introImg from "@/assets/doc-automation/introBank-bg.webp";
@@ -47,7 +49,10 @@ const tools = [
   { icon: Ban, img: benefit5, title: "Управление рисками", desc: "Блокируйте ненадёжных исполнителей на уровне платформы." },
 ];
 
-const DocAutomation = () => (
+const DocAutomation = () => {
+  const [consentPd, setConsentPd] = useState(false);
+
+  return (
   <div className="min-h-screen">
     <Header />
 
@@ -203,12 +208,10 @@ const DocAutomation = () => (
             <option value="200+" className="text-foreground">Более 200</option>
           </select>
           <div className="sm:col-span-2 text-center">
-            <Button type="submit" size="lg" className="bg-secondary hover:bg-secondary/90 text-secondary-foreground w-full sm:w-auto">
+            <ConsentCheckbox id="consent-doc" checked={consentPd} onCheckedChange={setConsentPd} variant="dark" className="mb-3" />
+            <Button type="submit" size="lg" className="bg-secondary hover:bg-secondary/90 text-secondary-foreground w-full sm:w-auto" disabled={!consentPd}>
               Получить консультацию
             </Button>
-            <p className="text-xs opacity-70 mt-3">
-              Отправляя форму, вы соглашаетесь с Политикой конфиденциальности.
-            </p>
           </div>
         </form>
       </div>
@@ -216,6 +219,7 @@ const DocAutomation = () => (
 
     <Footer />
   </div>
-);
+  );
+};
 
 export default DocAutomation;

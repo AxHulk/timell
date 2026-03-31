@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { Check, ChevronRight, Settings, Zap, FileText, Users, Receipt, BarChart3, Shield, Clock, Code2 } from "lucide-react";
 
 import heroImg from "@/assets/1c-integration/1C_cloud.webp";
@@ -53,6 +54,7 @@ const benefits = [
 
 const Integration1C = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const [consentPd, setConsentPd] = useState(false);
 
   return (
     <div className="min-h-screen">
@@ -268,12 +270,10 @@ const Integration1C = () => {
                   ))}
                 </div>
               </div>
-              <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+              <ConsentCheckbox id="consent-1c" checked={consentPd} onCheckedChange={setConsentPd} className="mb-3" />
+              <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" disabled={!consentPd}>
                 Получить помощь с интеграцией
               </Button>
-              <p className="text-xs text-muted-foreground text-center">
-                Отправляя форму, вы соглашаетесь с Политикой конфиденциальности.
-              </p>
             </form>
           </div>
         </div>

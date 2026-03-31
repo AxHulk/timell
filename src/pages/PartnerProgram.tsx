@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { Input } from "@/components/ui/input";
 import { Check, ChevronDown, Handshake, DollarSign, HeartHandshake, Users, Briefcase, GraduationCap, BarChart3, Headphones, Gift, BookOpen, UserCheck } from "lucide-react";
 import heroImg from "@/assets/partner/hero.png";
@@ -52,6 +53,7 @@ const joinSteps = [
 
 const PartnerProgram = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [consentPd, setConsentPd] = useState(false);
 
   return (
     <div className="min-h-screen">
@@ -289,12 +291,10 @@ const PartnerProgram = () => {
                   ))}
                 </div>
               </div>
-              <Button type="submit" size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+              <ConsentCheckbox id="consent-partner" checked={consentPd} onCheckedChange={setConsentPd} className="mb-3" />
+              <Button type="submit" size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" disabled={!consentPd}>
                 Отправить
               </Button>
-              <p className="text-xs text-muted-foreground text-center">
-                Отправляя форму, вы соглашаетесь с Политикой конфиденциальности.
-              </p>
             </form>
           </div>
         </div>

@@ -270,9 +270,12 @@ const Register = () => {
                   <p className="text-xs text-muted-foreground mt-1">Код действителен 5 минут</p>
                 </div>
               )}
-              <div className="flex items-center gap-2">
+              <div className="flex items-start gap-2">
                 <Checkbox id="pd" checked={form.agreePersonalData} onCheckedChange={(c) => update({ agreePersonalData: !!c })} />
-                <Label htmlFor="pd" className="text-sm">Выражаю <Label htmlFor="pd" className="text-sm">Выражаю <a href="/documents/consent-registration" target="_blank" className="text-primary underline">согласие</a> на обработку персональных данных</Label></Label>
+                <Label htmlFor="pd" className="text-xs leading-relaxed cursor-pointer">
+                  Я свободно, своей волей и в своем интересе даю конкретное, информированное и сознательное согласие на обработку моих персональных данных и полностью принимаю условия{" "}
+                  <a href="/documents/privacy-policy" target="_blank" className="text-primary underline">Политики конфиденциальности</a>
+                </Label>
               </div>
             </div>
             <div className="mt-6">

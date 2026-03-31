@@ -1,6 +1,8 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { Shield, Check, Calculator, FileText, Receipt, Search, Users, ChevronRight } from "lucide-react";
 
 import warningImg from "@/assets/tax-payment/warning.webp";
@@ -46,7 +48,10 @@ const industries = [
   { icon: iconScale, label: "HoReCa" },
 ];
 
-const TaxPayment = () => (
+const TaxPayment = () => {
+  const [consentPd, setConsentPd] = useState(false);
+
+  return (
   <div className="min-h-screen">
     <Header />
 
@@ -199,12 +204,10 @@ const TaxPayment = () => (
                 ))}
               </div>
             </div>
-            <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+            <ConsentCheckbox id="consent-tax" checked={consentPd} onCheckedChange={setConsentPd} className="mb-3" />
+            <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" disabled={!consentPd}>
               Отправить
             </Button>
-            <p className="text-xs text-muted-foreground text-center">
-              Отправляя форму, вы соглашаетесь с Политикой конфиденциальности.
-            </p>
           </form>
         </div>
       </div>
@@ -252,6 +255,7 @@ const TaxPayment = () => (
 
     <Footer />
   </div>
-);
+  );
+};
 
 export default TaxPayment;

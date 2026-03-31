@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   FileText, ShieldCheck, ClipboardList, Receipt, CheckCircle2, Users,
@@ -86,6 +87,7 @@ const metrics = [
 
 const TourismPayments = () => {
   const [executorCount, setExecutorCount] = useState("");
+  const [consentPd, setConsentPd] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
@@ -402,13 +404,10 @@ const TourismPayments = () => {
               ))}
             </div>
           </div>
-          <Button size="lg" className="w-full sm:w-auto px-12 bg-secondary hover:bg-secondary/90 text-secondary-foreground text-base font-bold">
+          <ConsentCheckbox id="consent-tourism" checked={consentPd} onCheckedChange={setConsentPd} variant="dark" className="mt-4" />
+          <Button size="lg" className="w-full sm:w-auto px-12 bg-secondary hover:bg-secondary/90 text-secondary-foreground text-base font-bold mt-4" disabled={!consentPd}>
             Отправить
           </Button>
-          <p className="text-xs text-primary-foreground/50 mt-4">
-            Отправляя форму, вы соглашаетесь с{" "}
-            <a href="/documents/privacy-policy" target="_blank" className="underline">Политикой конфиденциальности</a>
-          </p>
         </div>
       </section>
 

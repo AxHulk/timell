@@ -1,6 +1,8 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { X, Check, Clock, Users, Shield, ChevronRight } from "lucide-react";
 
 import heroImg from "@/assets/freelancer-onboarding/automation.webp";
@@ -53,7 +55,10 @@ const detailItems = [
   { img: risk4, title: "Отсутствие проблем с реквизитами", desc: "Не нужно запрашивать и хранить реквизиты. Исполнитель получит деньги в Timell и сам разберётся с зачислением." },
 ];
 
-const FreelancerOnboarding = () => (
+const FreelancerOnboarding = () => {
+  const [consentPd, setConsentPd] = useState(false);
+
+  return (
   <div className="min-h-screen">
     <Header />
 
@@ -230,12 +235,10 @@ const FreelancerOnboarding = () => (
                 ))}
               </div>
             </div>
-            <Button type="submit" size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+            <ConsentCheckbox id="consent-onboarding" checked={consentPd} onCheckedChange={setConsentPd} className="mb-3" />
+            <Button type="submit" size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" disabled={!consentPd}>
               Отправить
             </Button>
-            <p className="text-xs text-muted-foreground text-center">
-              Отправляя форму, вы соглашаетесь с Политикой конфиденциальности.
-            </p>
           </form>
         </div>
       </div>
@@ -269,6 +272,7 @@ const FreelancerOnboarding = () => (
 
     <Footer />
   </div>
-);
+  );
+};
 
 export default FreelancerOnboarding;

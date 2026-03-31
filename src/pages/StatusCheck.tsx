@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { Input } from "@/components/ui/input";
 import { Shield, Check, Clock, FileText, AlertTriangle, TrendingDown, UserX, Ban, ChevronDown, Building2, User, MapPin, Loader2, Briefcase, Calendar, Hash } from "lucide-react";
 import heroImg from "@/assets/status-check/hero.png";
@@ -66,6 +67,7 @@ const faq = [
 const StatusCheck = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [inn, setInn] = useState("");
+  const [consentPd, setConsentPd] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<{
@@ -475,12 +477,10 @@ const StatusCheck = () => {
                   ))}
                 </div>
               </div>
-              <Button type="submit" size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+              <ConsentCheckbox id="consent-status" checked={consentPd} onCheckedChange={setConsentPd} className="mb-3" />
+              <Button type="submit" size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" disabled={!consentPd}>
                 Отправить
               </Button>
-              <p className="text-xs text-muted-foreground text-center">
-                Отправляя форму, вы соглашаетесь с Политикой конфиденциальности.
-              </p>
             </form>
           </div>
         </div>
