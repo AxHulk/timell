@@ -71,21 +71,6 @@ const trustPillars = [
   },
 ];
 
-/* ---------- media ---------- */
-const mediaArticles = [
-  {
-    title: "Как компаниям безопасно работать с самозанятыми в 2026 году",
-    excerpt: "Разбираемся в новых требованиях ФНС и рассказываем, как платформа Timell помогает избежать налоговых рисков…",
-  },
-  {
-    title: "Автоматизация документооборота: экономия времени и денег",
-    excerpt: "Почему компании выбирают Timell для управления выплатами внештатным исполнителям…",
-  },
-  {
-    title: "Timell вошла в топ-10 HRTech стартапов России",
-    excerpt: "Платформа получила признание за инновационный подход к автоматизации работы с фрилансерами…",
-  },
-];
 
 /* ================================================================== */
 
@@ -225,14 +210,14 @@ const About = () => (
             <li className="flex items-center gap-3"><Phone className="w-5 h-5 text-primary flex-shrink-0" /> <a href="tel:+74852974060" className="text-primary hover:underline">8 (485) 29-74-060</a></li>
             <li className="flex items-center gap-3"><MapPin className="w-5 h-5 text-primary flex-shrink-0" /> <span>152612, Ярославская обл., г. Углич, мкр Солнечный 26а, кв. 4</span></li>
           </ul>
-          <a
-            href="https://t.me/timelltech"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
-          >
-            Телеграм-канал @timelltech <ExternalLink className="w-4 h-4" />
-          </a>
+          <div className="flex items-center gap-4">
+            <a href="https://vk.ru/vk_timell" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline font-medium">
+              VK <ExternalLink className="w-4 h-4" />
+            </a>
+            <a href="https://t.me/TG_Timell" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline font-medium">
+              Telegram <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
         </div>
 
         <div className="space-y-8">
@@ -251,36 +236,6 @@ const About = () => (
       </div>
     </section>
 
-    {/* ---- Partners ---- */}
-    <section className="py-16 bg-muted/40">
-      <div className="container text-center">
-        <h2 className="text-2xl md:text-3xl font-bold font-display mb-4 text-foreground">Наши партнёры и сертификаты</h2>
-        <p className="text-muted-foreground mb-10 max-w-2xl mx-auto">
-          Timell работает в тесном сотрудничестве с ведущими организациями и государственными структурами.
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-8">
-          <span className="rounded-xl bg-card border border-border px-6 py-4 text-sm font-medium text-foreground">ФНС России</span>
-          <span className="rounded-xl bg-card border border-border px-6 py-4 text-sm font-medium text-foreground">Минцифры России</span>
-          <span className="rounded-xl bg-card border border-border px-6 py-4 text-sm font-medium text-foreground">АО «АЛЬФА-БАНК»</span>
-        </div>
-      </div>
-    </section>
-
-    {/* ---- Media ---- */}
-    <section className="py-16 md:py-24">
-      <div className="container">
-        <h2 className="text-2xl md:text-3xl font-bold font-display mb-10 text-foreground">Timell в СМИ</h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          {mediaArticles.map((a) => (
-            <div key={a.title} className="bg-card border border-border rounded-2xl p-6 space-y-3">
-              <h3 className="font-bold text-foreground">{a.title}</h3>
-              <p className="text-sm text-muted-foreground">{a.excerpt}</p>
-              <span className="text-primary text-sm font-medium">Читать далее →</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
 
     {/* ---- CTA ---- */}
     <section className="py-20 bg-primary/5">
