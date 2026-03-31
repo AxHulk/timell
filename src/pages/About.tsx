@@ -210,14 +210,14 @@ const About = () => (
             <li className="flex items-center gap-3"><Phone className="w-5 h-5 text-primary flex-shrink-0" /> <a href="tel:+74852974060" className="text-primary hover:underline">8 (485) 29-74-060</a></li>
             <li className="flex items-center gap-3"><MapPin className="w-5 h-5 text-primary flex-shrink-0" /> <span>152612, Ярославская обл., г. Углич, мкр Солнечный 26а, кв. 4</span></li>
           </ul>
-          <a
-            href="https://t.me/timelltech"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
-          >
-            Телеграм-канал @timelltech <ExternalLink className="w-4 h-4" />
-          </a>
+          <div className="flex items-center gap-4">
+            <a href="https://vk.ru/vk_timell" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline font-medium">
+              VK <ExternalLink className="w-4 h-4" />
+            </a>
+            <a href="https://t.me/TG_Timell" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline font-medium">
+              Telegram <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
         </div>
 
         <div className="space-y-8">
