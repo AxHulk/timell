@@ -85,6 +85,7 @@ const metrics = [
 
 const FreelancerPayments = () => {
   const [executorCount, setExecutorCount] = useState("");
+  const [consentPd, setConsentPd] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
