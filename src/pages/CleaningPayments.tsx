@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Zap, ClipboardList, FileText, ShieldCheck, Receipt, UserPlus, Headphones,
