@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { Input } from "@/components/ui/input";
 import { Check, ChevronDown, Handshake, DollarSign, HeartHandshake, Users, Briefcase, GraduationCap, BarChart3, Headphones, Gift, BookOpen, UserCheck } from "lucide-react";
 import heroImg from "@/assets/partner/hero.png";

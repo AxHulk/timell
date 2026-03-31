@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { X, Check, Clock, Users, Shield, ChevronRight } from "lucide-react";
 
 import heroImg from "@/assets/freelancer-onboarding/automation.webp";

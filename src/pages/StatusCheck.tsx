@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { Input } from "@/components/ui/input";
 import { Shield, Check, Clock, FileText, AlertTriangle, TrendingDown, UserX, Ban, ChevronDown, Building2, User, MapPin, Loader2, Briefcase, Calendar, Hash } from "lucide-react";
 import heroImg from "@/assets/status-check/hero.png";

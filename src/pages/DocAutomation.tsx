@@ -2,6 +2,7 @@ import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { Check, FileText, Shield, Globe, Users, Link2, Ban, ChevronRight } from "lucide-react";
 
 import introImg from "@/assets/doc-automation/introBank-bg.webp";
