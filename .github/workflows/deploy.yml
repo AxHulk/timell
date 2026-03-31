@@ -1,0 +1,44 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy-to-vps:
+    name: Синхронизация кода с веб-сервером
+    runs-on: [self-hosted, linux, x64, production]
+
+    steps:
+      - name: 1. Клонирование репозитория
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: 2. Установка Node.js (если нужно)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 3. Установка зависимостей (npm)
+        run: npm install
+
+      - name: 4. Сборка проекта
+        run: npm run build
+
+      - name: 5. Синхронизация файлов (rsync)
+        run: |
+          rsync -avz --delete \
+            --exclude=".git/" \
+            --exclude=".github/" \
+            --exclude="node_modules/" \
+            --exclude=".env" \
+            ${{ github.workspace }}/dist/ /var/www/timell/dist/
+
+      - name: 6. Перезапуск Nginx
+        run: sudo systemctl restart nginx.service
