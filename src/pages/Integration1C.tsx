@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Header from "@/components/Header";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Check, ChevronRight, Settings, Zap, FileText, Users, Receipt, BarChart3, Shield, Clock, Code2 } from "lucide-react";
