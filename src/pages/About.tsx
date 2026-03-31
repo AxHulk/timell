@@ -236,36 +236,6 @@ const About = () => (
       </div>
     </section>
 
-    {/* ---- Partners ---- */}
-    <section className="py-16 bg-muted/40">
-      <div className="container text-center">
-        <h2 className="text-2xl md:text-3xl font-bold font-display mb-4 text-foreground">Наши партнёры и сертификаты</h2>
-        <p className="text-muted-foreground mb-10 max-w-2xl mx-auto">
-          Timell работает в тесном сотрудничестве с ведущими организациями и государственными структурами.
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-8">
-          <span className="rounded-xl bg-card border border-border px-6 py-4 text-sm font-medium text-foreground">ФНС России</span>
-          <span className="rounded-xl bg-card border border-border px-6 py-4 text-sm font-medium text-foreground">Минцифры России</span>
-          <span className="rounded-xl bg-card border border-border px-6 py-4 text-sm font-medium text-foreground">АО «АЛЬФА-БАНК»</span>
-        </div>
-      </div>
-    </section>
-
-    {/* ---- Media ---- */}
-    <section className="py-16 md:py-24">
-      <div className="container">
-        <h2 className="text-2xl md:text-3xl font-bold font-display mb-10 text-foreground">Timell в СМИ</h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          {mediaArticles.map((a) => (
-            <div key={a.title} className="bg-card border border-border rounded-2xl p-6 space-y-3">
-              <h3 className="font-bold text-foreground">{a.title}</h3>
-              <p className="text-sm text-muted-foreground">{a.excerpt}</p>
-              <span className="text-primary text-sm font-medium">Читать далее →</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
 
     {/* ---- CTA ---- */}
     <section className="py-20 bg-primary/5">
