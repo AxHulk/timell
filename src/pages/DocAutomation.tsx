@@ -221,6 +221,7 @@ const DocAutomation = () => {
 
     <Footer />
   </div>
-);
+  );
+};
 
 export default DocAutomation;

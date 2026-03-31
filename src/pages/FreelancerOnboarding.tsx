@@ -273,6 +273,7 @@ const FreelancerOnboarding = () => {
 
     <Footer />
   </div>
-);
+  );
+};
 
 export default FreelancerOnboarding;

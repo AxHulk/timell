@@ -257,6 +257,7 @@ const TaxPayment = () => {
 
     <Footer />
   </div>
-);
+  );
+};
 
 export default TaxPayment;
