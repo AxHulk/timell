@@ -270,12 +270,10 @@ const Integration1C = () => {
                   ))}
                 </div>
               </div>
-              <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+              <ConsentCheckbox id="consent-1c" checked={consentPd} onCheckedChange={setConsentPd} className="mb-3" />
+              <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" disabled={!consentPd}>
                 Получить помощь с интеграцией
               </Button>
-              <p className="text-xs text-muted-foreground text-center">
-                Отправляя форму, вы соглашаетесь с Политикой конфиденциальности.
-              </p>
             </form>
           </div>
         </div>

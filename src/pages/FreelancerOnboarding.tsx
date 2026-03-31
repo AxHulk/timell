@@ -235,12 +235,10 @@ const FreelancerOnboarding = () => {
                 ))}
               </div>
             </div>
-            <Button type="submit" size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+            <ConsentCheckbox id="consent-onboarding" checked={consentPd} onCheckedChange={setConsentPd} className="mb-3" />
+            <Button type="submit" size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" disabled={!consentPd}>
               Отправить
             </Button>
-            <p className="text-xs text-muted-foreground text-center">
-              Отправляя форму, вы соглашаетесь с Политикой конфиденциальности.
-            </p>
           </form>
         </div>
       </div>

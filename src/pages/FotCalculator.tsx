@@ -326,12 +326,10 @@ const FotCalculator = () => {
                 </button>
               ))}
             </div>
-            <Button size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-bold">
+            <ConsentCheckbox id="consent-fot" checked={consentPd} onCheckedChange={setConsentPd} className="mb-3" />
+            <Button size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-bold" disabled={!consentPd}>
               Рассчитать
             </Button>
-            <p className="text-xs text-muted-foreground text-center mt-3">
-              Отправляя форму, вы соглашаетесь с Отправляя форму, вы соглашаетесь с <a href="/documents/privacy-policy" target="_blank" className="underline">Политикой конфиденциальности</a>..
-            </p>
           </div>
         </div>
       </section>
