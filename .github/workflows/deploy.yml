@@ -1,19 +1,15 @@
 name: Deploy to VPS
-
 on:
   push:
     branches:
       - main
-
 concurrency:
   group: production-deploy
   cancel-in-progress: true
-
 jobs:
   deploy-to-vps:
     name: Синхронизация кода с веб-сервером
     runs-on: [self-hosted, linux, x64, production]
-
     steps:
       - name: 1. Клонирование репозитория
         uses: actions/checkout@v4
