@@ -46,5 +46,11 @@ jobs:
           sudo find /var/www/timell/dist -type f -exec chmod 644 {} \;
           sudo chown -R github-runner:www-data /var/www/timell/dist
 
+      - name: 6.5. Обновление конфигурации Nginx
+        run: |
+          sudo cp ${{ github.workspace }}/nginx/timell.conf /etc/nginx/sites-available/timell.ru.conf
+          sudo ln -sf /etc/nginx/sites-available/timell.ru.conf /etc/nginx/sites-enabled/timell.ru.conf
+          sudo nginx -t
+
       - name: 7. Перезапуск Nginx
         run: sudo systemctl restart nginx.service
