@@ -23,7 +23,7 @@ const ConsentCheckbox = ({ id = "consent-pd", checked, onCheckedChange, variant 
       />
       <Label htmlFor={id} className={`text-xs leading-relaxed cursor-pointer ${textClass}`}>
         Я свободно, своей волей и в своем интересе даю конкретное, информированное и сознательное согласие на обработку моих персональных данных и полностью принимаю условия{" "}
-        <a href="/documents/privacy-policy" target="_blank" rel="noopener noreferrer" className={linkClass}>
+        <a href="/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className={linkClass}>
           Политики конфиденциальности
         </a>
       </Label>

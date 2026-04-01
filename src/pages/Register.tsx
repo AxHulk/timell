@@ -221,7 +221,7 @@ const Register = () => {
                   <Input placeholder="Укажите свой ИНН" value={form.inn} onChange={(e) => update({ inn: e.target.value })} />
                   <div className="flex items-center gap-2">
                     <Checkbox id="terms" checked={form.agreeTerms} onCheckedChange={(c) => update({ agreeTerms: !!c })} />
-                    <Label htmlFor="terms" className="text-sm">Я прочитал и принимаю условия <Label htmlFor="terms" className="text-sm">Я прочитал и принимаю условия <a href="/documents/customer-agreement" target="_blank" className="text-primary underline">Соглашения с Заказчиком</a></Label></Label>
+                    <Label htmlFor="terms" className="text-sm">Я прочитал и принимаю условия <a href="/legal/customer-agreement" target="_blank" className="text-primary underline">Соглашения с Заказчиком</a></Label>
                   </div>
                 </div>
               </>
@@ -274,7 +274,7 @@ const Register = () => {
                 <Checkbox id="pd" checked={form.agreePersonalData} onCheckedChange={(c) => update({ agreePersonalData: !!c })} />
                 <Label htmlFor="pd" className="text-xs leading-relaxed cursor-pointer">
                   Я свободно, своей волей и в своем интересе даю конкретное, информированное и сознательное согласие на обработку моих персональных данных и полностью принимаю условия{" "}
-                  <a href="/documents/privacy-policy" target="_blank" className="text-primary underline">Политики конфиденциальности</a>
+                  <a href="/legal/privacy-policy" target="_blank" className="text-primary underline">Политики конфиденциальности</a>
                 </Label>
               </div>
             </div>
@@ -290,7 +290,7 @@ const Register = () => {
               )}
             </div>
             <p className="text-xs text-center text-muted-foreground mt-4">
-              Регистрируясь, вы принимаете условия <a href="/documents/user-agreement" target="_blank" className="underline">Пользовательского соглашения</a> и подтверждаете ознакомление с <a href="/documents/privacy-policy" target="_blank" className="underline">Политикой конфиденциальности</a>
+              Регистрируясь, вы принимаете условия <a href="/legal/user-agreement" target="_blank" className="underline">Пользовательского соглашения</a> и подтверждаете ознакомление с <a href="/legal/privacy-policy" target="_blank" className="underline">Политикой конфиденциальности</a>
             </p>
           </div>
         )}

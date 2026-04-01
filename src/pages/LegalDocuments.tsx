@@ -4,15 +4,15 @@ import Footer from "@/components/Footer";
 import { FileText, ExternalLink } from "lucide-react";
 
 const legalDocs = [
-  { title: "Пользовательское соглашение Timell", date: "Действует с 30.03.2026", href: "/documents/user-agreement" },
-  { title: "Соглашение Timell с Заказчиком", date: "Действует с 30.03.2026", href: "/documents/customer-agreement" },
-  { title: "Шаблон договора Заказчик — Исполнитель", date: "Действует с 30.03.2026", href: "/documents/contract-template" },
-  { title: "Политика конфиденциальности", date: "Действует с 30.03.2026", href: "/documents/privacy-policy" },
-  { title: "Согласие на обработку персональных данных при регистрации на платформе", href: "/documents/consent-registration" },
-  { title: "Согласие на обработку персональных данных при отправке заявки на сайте", href: "/documents/consent-website-form" },
-  { title: "Согласие на обработку персональных данных при обращении в поддержку", href: "/documents/consent-support" },
-  { title: "Уведомление о порядке обработки персональных данных", href: "/documents/data-processing-notice" },
-  { title: "Политика использования файлов cookie", href: "/documents/cookie-policy" },
+  { title: "Пользовательское соглашение Timell", date: "Действует с 30.03.2026", href: "/legal/user-agreement" },
+  { title: "Соглашение Timell с Заказчиком", date: "Действует с 30.03.2026", href: "/legal/customer-agreement" },
+  { title: "Шаблон договора Заказчик — Исполнитель", date: "Действует с 30.03.2026", href: "/legal/contract-template" },
+  { title: "Политика конфиденциальности", date: "Действует с 30.03.2026", href: "/legal/privacy-policy" },
+  { title: "Согласие на обработку персональных данных при регистрации на платформе", href: "/legal/consent-registration" },
+  { title: "Согласие на обработку персональных данных при отправке заявки на сайте", href: "/legal/consent-website-form" },
+  { title: "Согласие на обработку персональных данных при обращении в поддержку", href: "/legal/consent-support" },
+  { title: "Уведомление о порядке обработки персональных данных", href: "/legal/data-processing-notice" },
+  { title: "Политика использования файлов cookie", href: "/legal/cookie-policy" },
 ];
 
 const licenses = [

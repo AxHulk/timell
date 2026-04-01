@@ -18,9 +18,9 @@ const navLinks = [
 ];
 
 const legalLinks = [
-  { label: "Политика конфиденциальности", href: "/documents/privacy-policy" },
-  { label: "Пользовательское соглашение", href: "/documents/user-agreement" },
-  { label: "Юридические документы", href: "/documents" },
+  { label: "Политика конфиденциальности", href: "/legal/privacy-policy" },
+  { label: "Пользовательское соглашение", href: "/legal/user-agreement" },
+  { label: "Юридические документы", href: "/legal" },
 ];
 
 const paymentLogos = [
