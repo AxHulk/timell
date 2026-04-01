@@ -221,7 +221,7 @@ const Register = () => {
                   <Input placeholder="Укажите свой ИНН" value={form.inn} onChange={(e) => update({ inn: e.target.value })} />
                   <div className="flex items-center gap-2">
                     <Checkbox id="terms" checked={form.agreeTerms} onCheckedChange={(c) => update({ agreeTerms: !!c })} />
-                    <Label htmlFor="terms" className="text-sm">Я прочитал и принимаю условия <Label htmlFor="terms" className="text-sm">Я прочитал и принимаю условия <a href="/documents/customer-agreement" target="_blank" className="text-primary underline">Соглашения с Заказчиком</a></Label></Label>
+                    <Label htmlFor="terms" className="text-sm">Я прочитал и принимаю условия <a href="/legal/customer-agreement" target="_blank" className="text-primary underline">Соглашения с Заказчиком</a></Label>
                   </div>
                 </div>
               </>
