@@ -274,7 +274,7 @@ const Register = () => {
                 <Checkbox id="pd" checked={form.agreePersonalData} onCheckedChange={(c) => update({ agreePersonalData: !!c })} />
                 <Label htmlFor="pd" className="text-xs leading-relaxed cursor-pointer">
                   Я свободно, своей волей и в своем интересе даю конкретное, информированное и сознательное согласие на обработку моих персональных данных и полностью принимаю условия{" "}
-                  <a href="/documents/privacy-policy" target="_blank" className="text-primary underline">Политики конфиденциальности</a>
+                  <a href="/legal/privacy-policy" target="_blank" className="text-primary underline">Политики конфиденциальности</a>
                 </Label>
               </div>
             </div>
