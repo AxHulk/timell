@@ -290,7 +290,7 @@ const Register = () => {
               )}
             </div>
             <p className="text-xs text-center text-muted-foreground mt-4">
-              Регистрируясь, вы принимаете условия <a href="/documents/user-agreement" target="_blank" className="underline">Пользовательского соглашения</a> и подтверждаете ознакомление с <a href="/documents/privacy-policy" target="_blank" className="underline">Политикой конфиденциальности</a>
+              Регистрируясь, вы принимаете условия <a href="/legal/user-agreement" target="_blank" className="underline">Пользовательского соглашения</a> и подтверждаете ознакомление с <a href="/legal/privacy-policy" target="_blank" className="underline">Политикой конфиденциальности</a>
             </p>
           </div>
         )}
