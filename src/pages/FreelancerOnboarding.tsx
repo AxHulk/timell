@@ -211,36 +211,7 @@ const FreelancerOnboarding = () => {
           <p className="text-muted-foreground text-center mb-8">
             Мы вникнем в особенности вашего бизнеса, разберёмся в процессах и дадим точную оценку.
           </p>
-          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <input placeholder="Ваше имя" className="w-full rounded-xl px-4 py-3 border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/40" />
-            <input placeholder="Номер телефона" className="w-full rounded-xl px-4 py-3 border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/40" />
-            <input placeholder="E-mail (необязательно)" className="w-full rounded-xl px-4 py-3 border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/40" />
-            <div>
-              <p className="text-sm font-medium text-foreground mb-2">Способ связи</p>
-              <div className="flex gap-4">
-                {["Телефонный звонок", "Email", "WhatsApp"].map((opt) => (
-                  <label key={opt} className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
-                    <input type="radio" name="contact" className="accent-primary" /> {opt}
-                  </label>
-                ))}
-              </div>
-            </div>
-            <textarea placeholder="Опишите ваш запрос (необязательно)" rows={3} className="w-full rounded-xl px-4 py-3 border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/40 resize-none" />
-            <div>
-              <p className="text-sm font-medium text-foreground mb-2">Сколько у вас исполнителей?</p>
-              <div className="flex flex-wrap gap-4">
-                {["До 50", "50–200", "200 и выше", "Я сам исполнитель"].map((opt) => (
-                  <label key={opt} className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
-                    <input type="radio" name="count" className="accent-primary" /> {opt}
-                  </label>
-                ))}
-              </div>
-            </div>
-            <ConsentCheckbox id="consent-onboarding" checked={consentPd} onCheckedChange={setConsentPd} className="mb-3" />
-            <Button type="submit" size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" disabled={!consentPd}>
-              Отправить
-            </Button>
-          </form>
+          <OnboardingLeadForm consentPd={consentPd} setConsentPd={setConsentPd} />
         </div>
       </div>
     </section>
