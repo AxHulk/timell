@@ -2,7 +2,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import IndustryLeadForm from "@/components/IndustryLeadForm";
 import {
-import {
   HardHat, ClipboardList, ShieldCheck, FileText, Users, Headphones,
   CheckCircle2, X, Check, Hammer, Wrench, Zap, Droplets, Building2,
   Shovel, Trash2, PaintBucket, Clock, TrendingDown, Shield,
