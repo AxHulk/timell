@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { Input } from "@/components/ui/input";
+import { useLeadSubmit } from "@/hooks/useLeadSubmit";
 import {
   Calculator, TrendingDown, ChevronDown, ChevronUp,
   Shield, Headphones, FileText, LayoutList, Zap, Banknote,
@@ -161,8 +162,13 @@ const GroupRow = ({
 const FotCalculator = () => {
   const [people, setPeople] = useState(10);
   const [fot, setFot] = useState(1000000);
+  const [fotName, setFotName] = useState("");
+  const [fotCompany, setFotCompany] = useState("");
+  const [fotPhone, setFotPhone] = useState("");
+  const [fotEmail, setFotEmail] = useState("");
   const [executorCount, setExecutorCount] = useState("");
   const [consentPd, setConsentPd] = useState(false);
+  const { submitLead, submitting } = useLeadSubmit();
 
   const r = calc(Math.max(people, 1), Math.max(fot, 1));
 
