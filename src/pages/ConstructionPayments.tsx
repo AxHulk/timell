@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import IndustryLeadForm from "@/components/IndustryLeadForm";
+import { Button } from "@/components/ui/button";
 import {
   HardHat, ClipboardList, ShieldCheck, FileText, Users, Headphones,
   CheckCircle2, X, Check, Hammer, Wrench, Zap, Droplets, Building2,
