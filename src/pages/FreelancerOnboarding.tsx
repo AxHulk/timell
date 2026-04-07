@@ -201,8 +201,7 @@ const FreelancerOnboarding = () => {
       </div>
     </section>
 
-    {/* Block 7: Lead Form */}
-    <OnboardingForm consentPd={consentPd} setConsentPd={setConsentPd} />
+    <FreelancerOnboardingForm />
 
 
     {/* Block 8: About & Stats */}
