@@ -202,19 +202,8 @@ const FreelancerOnboarding = () => {
     </section>
 
     {/* Block 7: Lead Form */}
-    <section className="py-20 bg-muted/50">
-      <div className="container max-w-2xl">
-        <div className="rounded-2xl border border-border bg-card p-8 lg:p-12 shadow-lg">
-          <h2 className="text-2xl lg:text-3xl font-bold font-display text-center mb-2">
-            Получите точный расчёт экономии для вашего бизнеса
-          </h2>
-          <p className="text-muted-foreground text-center mb-8">
-            Мы вникнем в особенности вашего бизнеса, разберёмся в процессах и дадим точную оценку.
-          </p>
-          <OnboardingLeadForm consentPd={consentPd} setConsentPd={setConsentPd} />
-        </div>
-      </div>
-    </section>
+    <OnboardingForm consentPd={consentPd} setConsentPd={setConsentPd} />
+
 
     {/* Block 8: About & Stats */}
     <section className="py-16">
