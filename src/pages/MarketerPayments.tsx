@@ -1,9 +1,7 @@
-import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import ConsentCheckbox from "@/components/ConsentCheckbox";
+import IndustryLeadForm from "@/components/IndustryLeadForm";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   ClipboardList, ShieldCheck, Users, Receipt, PenTool, Headphones,
@@ -84,9 +82,6 @@ const metrics = [
 ];
 
 const MarketerPayments = () => {
-  const [executorCount, setExecutorCount] = useState("");
-  const [consentPd, setConsentPd] = useState(false);
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -369,44 +364,7 @@ const MarketerPayments = () => {
           </div>
         </div>
       </section>
-
-      {/* Lead form */}
-      <section className="py-20 bg-primary text-primary-foreground">
-        <div className="container max-w-3xl text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">Возникли вопросы?</h2>
-          <p className="text-primary-foreground/80 mb-10 text-lg">
-            Оставьте заявку, и мы свяжемся с вами в течение рабочего дня
-          </p>
-          <div className="grid sm:grid-cols-2 gap-4 mb-4">
-            <Input placeholder="Ваше имя" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50" />
-            <Input placeholder="Компания" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50" />
-            <Input placeholder="Номер телефона" type="tel" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50" />
-            <Input placeholder="E-mail" type="email" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50" />
-          </div>
-          <div className="mb-6">
-            <p className="text-sm text-primary-foreground/70 mb-3">Сколько у вас исполнителей?</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              {["До 10", "От 11 до 50", "От 51 до 200", "От 201 и более", "Я сам исполнитель"].map((opt) => (
-                <button
-                  key={opt}
-                  onClick={() => setExecutorCount(opt)}
-                  className={`px-4 py-2 rounded-full text-sm border transition-colors ${
-                    executorCount === opt
-                      ? "bg-secondary border-secondary text-secondary-foreground"
-                      : "border-primary-foreground/30 text-primary-foreground/80 hover:border-primary-foreground/60"
-                  }`}
-                >
-                  {opt}
-                </button>
-              ))}
-            </div>
-          </div>
-          <ConsentCheckbox id="consent-marketer" checked={consentPd} onCheckedChange={setConsentPd} variant="dark" className="mt-4" />
-          <Button size="lg" className="w-full sm:w-auto px-12 bg-secondary hover:bg-secondary/90 text-secondary-foreground text-base font-bold mt-4" disabled={!consentPd}>
-            Отправить
-          </Button>
-        </div>
-      </section>
+      <IndustryLeadForm consentId="consent-marketer" source="marketer-payments" />
 
       {/* CTA */}
       <section className="py-16">

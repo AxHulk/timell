@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import ConsentCheckbox from "@/components/ConsentCheckbox";
+import { useLeadSubmit } from "@/hooks/useLeadSubmit";
 import { X, Check, Clock, Users, Shield, ChevronRight } from "lucide-react";
 
 import heroImg from "@/assets/freelancer-onboarding/automation.webp";
@@ -55,9 +56,78 @@ const detailItems = [
   { img: risk4, title: "Отсутствие проблем с реквизитами", desc: "Не нужно запрашивать и хранить реквизиты. Исполнитель получит деньги в Timell и сам разберётся с зачислением." },
 ];
 
-const FreelancerOnboarding = () => {
+const OnboardingLeadForm = () => {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [contactMethod, setContactMethod] = useState("");
+  const [message, setMessage] = useState("");
+  const [teamSize, setTeamSize] = useState("");
   const [consentPd, setConsentPd] = useState(false);
+  const { submitLead, submitting } = useLeadSubmit();
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !phone.trim()) return;
+    const ok = await submitLead({
+      name, phone, email,
+      team_size: teamSize,
+      message: `${contactMethod ? `Способ связи: ${contactMethod}. ` : ""}${message}`,
+      source: "freelancer-onboarding",
+    });
+    if (ok) {
+      setName(""); setPhone(""); setEmail(""); setContactMethod("");
+      setMessage(""); setTeamSize(""); setConsentPd(false);
+    }
+  };
+
+  return (
+    <section className="py-20 bg-muted/50">
+      <div className="container max-w-2xl">
+        <div className="rounded-2xl border border-border bg-card p-8 lg:p-12 shadow-lg">
+          <h2 className="text-2xl lg:text-3xl font-bold font-display text-center mb-2">
+            Получите точный расчёт экономии для вашего бизнеса
+          </h2>
+          <p className="text-muted-foreground text-center mb-8">
+            Мы вникнем в особенности вашего бизнеса, разберёмся в процессах и дадим точную оценку.
+          </p>
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <input placeholder="Ваше имя" value={name} onChange={(e) => setName(e.target.value)} className="w-full rounded-xl px-4 py-3 border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/40" />
+            <input placeholder="Номер телефона" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full rounded-xl px-4 py-3 border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/40" />
+            <input placeholder="E-mail (необязательно)" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-xl px-4 py-3 border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/40" />
+            <div>
+              <p className="text-sm font-medium text-foreground mb-2">Способ связи</p>
+              <div className="flex gap-4">
+                {["Телефонный звонок", "Email", "WhatsApp"].map((opt) => (
+                  <label key={opt} className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
+                    <input type="radio" name="contact" className="accent-primary" checked={contactMethod === opt} onChange={() => setContactMethod(opt)} /> {opt}
+                  </label>
+                ))}
+              </div>
+            </div>
+            <textarea placeholder="Опишите ваш запрос (необязательно)" rows={3} value={message} onChange={(e) => setMessage(e.target.value)} className="w-full rounded-xl px-4 py-3 border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/40 resize-none" />
+            <div>
+              <p className="text-sm font-medium text-foreground mb-2">Сколько у вас исполнителей?</p>
+              <div className="flex flex-wrap gap-4">
+                {["До 50", "50–200", "200 и выше", "Я сам исполнитель"].map((opt) => (
+                  <label key={opt} className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
+                    <input type="radio" name="count" className="accent-primary" checked={teamSize === opt} onChange={() => setTeamSize(opt)} /> {opt}
+                  </label>
+                ))}
+              </div>
+            </div>
+            <ConsentCheckbox id="consent-onboarding" checked={consentPd} onCheckedChange={setConsentPd} className="mb-3" />
+            <Button type="submit" size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" disabled={!consentPd || submitting}>
+              {submitting ? "Отправка..." : "Отправить"}
+            </Button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const FreelancerOnboarding = () => {
   return (
   <div className="min-h-screen">
     <Header />
@@ -200,49 +270,8 @@ const FreelancerOnboarding = () => {
       </div>
     </section>
 
-    {/* Block 7: Lead Form */}
-    <section className="py-20 bg-muted/50">
-      <div className="container max-w-2xl">
-        <div className="rounded-2xl border border-border bg-card p-8 lg:p-12 shadow-lg">
-          <h2 className="text-2xl lg:text-3xl font-bold font-display text-center mb-2">
-            Получите точный расчёт экономии для вашего бизнеса
-          </h2>
-          <p className="text-muted-foreground text-center mb-8">
-            Мы вникнем в особенности вашего бизнеса, разберёмся в процессах и дадим точную оценку.
-          </p>
-          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <input placeholder="Ваше имя" className="w-full rounded-xl px-4 py-3 border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/40" />
-            <input placeholder="Номер телефона" className="w-full rounded-xl px-4 py-3 border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/40" />
-            <input placeholder="E-mail (необязательно)" className="w-full rounded-xl px-4 py-3 border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/40" />
-            <div>
-              <p className="text-sm font-medium text-foreground mb-2">Способ связи</p>
-              <div className="flex gap-4">
-                {["Телефонный звонок", "Email", "WhatsApp"].map((opt) => (
-                  <label key={opt} className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
-                    <input type="radio" name="contact" className="accent-primary" /> {opt}
-                  </label>
-                ))}
-              </div>
-            </div>
-            <textarea placeholder="Опишите ваш запрос (необязательно)" rows={3} className="w-full rounded-xl px-4 py-3 border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/40 resize-none" />
-            <div>
-              <p className="text-sm font-medium text-foreground mb-2">Сколько у вас исполнителей?</p>
-              <div className="flex flex-wrap gap-4">
-                {["До 50", "50–200", "200 и выше", "Я сам исполнитель"].map((opt) => (
-                  <label key={opt} className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
-                    <input type="radio" name="count" className="accent-primary" /> {opt}
-                  </label>
-                ))}
-              </div>
-            </div>
-            <ConsentCheckbox id="consent-onboarding" checked={consentPd} onCheckedChange={setConsentPd} className="mb-3" />
-            <Button type="submit" size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" disabled={!consentPd}>
-              Отправить
-            </Button>
-          </form>
-        </div>
-      </div>
-    </section>
+    <OnboardingLeadForm />
+
 
     {/* Block 8: About & Stats */}
     <section className="py-16">
