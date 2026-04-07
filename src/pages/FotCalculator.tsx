@@ -315,16 +315,17 @@ const FotCalculator = () => {
             <h2 className="text-2xl lg:text-3xl font-bold font-display text-center mb-2">Рассчитать размер комиссии Timell</h2>
             <p className="text-muted-foreground text-center mb-8">Заполните форму, чтобы получить индивидуальный расчёт</p>
             <div className="grid sm:grid-cols-2 gap-4 mb-4">
-              <Input placeholder="Ваше имя" />
-              <Input placeholder="Компания" />
-              <Input placeholder="Номер телефона" type="tel" />
-              <Input placeholder="E-mail" type="email" />
+              <Input placeholder="Ваше имя" value={fotName} onChange={(e) => setFotName(e.target.value)} />
+              <Input placeholder="Компания" value={fotCompany} onChange={(e) => setFotCompany(e.target.value)} />
+              <Input placeholder="Номер телефона" type="tel" value={fotPhone} onChange={(e) => setFotPhone(e.target.value)} />
+              <Input placeholder="E-mail" type="email" value={fotEmail} onChange={(e) => setFotEmail(e.target.value)} />
             </div>
             <p className="text-sm font-medium mb-3">Сколько у вас исполнителей?</p>
             <div className="flex flex-wrap gap-2 mb-6">
               {["До 10", "11–50", "51–200", "201+", "Я сам исполнитель"].map((opt) => (
                 <button
                   key={opt}
+                  type="button"
                   className={`px-4 py-2 rounded-full text-sm border transition-colors ${executorCount === opt ? "bg-primary text-primary-foreground border-primary" : "border-border hover:border-primary/50"}`}
                   onClick={() => setExecutorCount(opt)}
                 >
@@ -333,8 +334,23 @@ const FotCalculator = () => {
               ))}
             </div>
             <ConsentCheckbox id="consent-fot" checked={consentPd} onCheckedChange={setConsentPd} className="mb-3" />
-            <Button size="lg" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-bold" disabled={!consentPd}>
-              Рассчитать
+            <Button
+              size="lg"
+              className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-bold"
+              disabled={!consentPd || submitting}
+              onClick={async () => {
+                if (!fotName.trim() || !fotPhone.trim()) return;
+                const ok = await submitLead({
+                  name: fotName, company: fotCompany, phone: fotPhone, email: fotEmail,
+                  team_size: executorCount, source: "fot-calculator",
+                });
+                if (ok) {
+                  setFotName(""); setFotCompany(""); setFotPhone(""); setFotEmail("");
+                  setExecutorCount(""); setConsentPd(false);
+                }
+              }}
+            >
+              {submitting ? "Отправка..." : "Рассчитать"}
             </Button>
           </div>
         </div>
