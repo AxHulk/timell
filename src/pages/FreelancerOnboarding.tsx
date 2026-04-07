@@ -270,7 +270,7 @@ const FreelancerOnboarding = () => {
       </div>
     </section>
 
-    <FreelancerOnboardingForm />
+    <OnboardingLeadForm />
 
 
     {/* Block 8: About & Stats */}
