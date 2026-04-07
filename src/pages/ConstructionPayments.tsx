@@ -1,9 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import ConsentCheckbox from "@/components/ConsentCheckbox";
-import { useState } from "react";
+import IndustryLeadForm from "@/components/IndustryLeadForm";
+import {
 import {
   HardHat, ClipboardList, ShieldCheck, FileText, Users, Headphones,
   CheckCircle2, X, Check, Hammer, Wrench, Zap, Droplets, Building2,
@@ -73,8 +71,6 @@ const risks = [
 ];
 
 const ConstructionPayments = () => {
-  const [executorCount, setExecutorCount] = useState("");
-  const [consentPd, setConsentPd] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
@@ -350,37 +346,7 @@ const ConstructionPayments = () => {
         </div>
       </section>
 
-      {/* Lead form */}
-      <section className="py-20 bg-primary text-primary-foreground">
-        <div className="container max-w-3xl text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold font-display mb-4">Возникли вопросы?</h2>
-          <p className="text-primary-foreground/80 mb-10 text-lg">
-            Оставьте заявку, и мы свяжемся с вами в течение рабочего дня
-          </p>
-          <div className="grid sm:grid-cols-2 gap-4 mb-4">
-            <Input placeholder="Ваше имя" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50" />
-            <Input placeholder="Компания" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50" />
-            <Input placeholder="Номер телефона" type="tel" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50" />
-            <Input placeholder="E-mail" type="email" className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50" />
-          </div>
-          <select
-            value={executorCount}
-            onChange={(e) => setExecutorCount(e.target.value)}
-            className="flex h-10 w-full rounded-md border bg-primary-foreground/10 border-primary-foreground/20 px-3 py-2 text-sm text-primary-foreground mb-4"
-          >
-            <option value="" className="text-foreground">Сколько у вас исполнителей?</option>
-            <option value="10" className="text-foreground">До 10</option>
-            <option value="50" className="text-foreground">От 11 до 50</option>
-            <option value="200" className="text-foreground">От 51 до 200</option>
-            <option value="200+" className="text-foreground">От 201 и более</option>
-            <option value="self" className="text-foreground">Я сам исполнитель</option>
-          </select>
-          <ConsentCheckbox id="consent-construction" checked={consentPd} onCheckedChange={setConsentPd} variant="dark" className="mt-4" />
-          <Button size="lg" className="w-full sm:w-auto px-12 bg-secondary hover:bg-secondary/90 text-secondary-foreground text-base font-bold mt-4" disabled={!consentPd}>
-            Отправить
-          </Button>
-        </div>
-      </section>
+      <IndustryLeadForm consentId="consent-construction" source="construction-payments" />
 
       {/* CTA */}
       <section className="py-16">
