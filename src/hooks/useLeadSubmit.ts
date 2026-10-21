@@ -24,6 +24,10 @@ export function useLeadSubmit() {
         page_url: window.location.pathname,
       });
       if (error) throw error;
+      // Мгновенная отправка уведомления (не блокирует пользователя)
+      supabase.functions.invoke("notify-leads", { body: {} }).catch((e) =>
+        console.error("notify-leads invoke error:", e)
+      );
       toast.success("Заявка отправлена! Мы свяжемся с вами в ближайшее время.");
       return true;
     } catch (e) {
