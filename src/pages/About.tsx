@@ -224,11 +224,15 @@ const About = () => (
           <h2 className="text-2xl md:text-3xl font-bold font-display text-foreground">Реквизиты</h2>
           <div className="bg-muted/40 border border-border rounded-2xl p-6 text-sm text-muted-foreground space-y-2">
             <p><strong className="text-foreground">Полное наименование:</strong> Общество с ограниченной ответственностью «МЕРИДИАН»</p>
+            <p><strong className="text-foreground">Сокращённое наименование:</strong> ООО «МЕРИДИАН»</p>
             <p><strong className="text-foreground">ИНН:</strong> 5038182334</p>
-            <p><strong className="text-foreground">Р/с:</strong> 40802810916000001496</p>
-            <p><strong className="text-foreground">Банк:</strong> АО «АЛЬФА-БАНК»</p>
-            <p><strong className="text-foreground">БИК:</strong> 044525593</p>
-            <p><strong className="text-foreground">К/с:</strong> 30101810200000000593</p>
+            <p><strong className="text-foreground">КПП:</strong> 503801001</p>
+            <p><strong className="text-foreground">ОГРН:</strong> 1235000110795</p>
+            <p><strong className="text-foreground">Генеральный директор:</strong> Касатнова Софья Дмитриевна</p>
+            <p><strong className="text-foreground">Р/с:</strong> 40702810777000012940</p>
+            <p><strong className="text-foreground">Банк:</strong> ф-л ПАО «Банк «Санкт-Петербург» в г. Москве</p>
+            <p><strong className="text-foreground">БИК:</strong> 044525142</p>
+            <p><strong className="text-foreground">К/с:</strong> 30101810045250000142</p>
             <p><strong className="text-foreground">Адрес:</strong> 141280, Россия, Московская область, г.о. Пушкинский, г. Ивантеевка, проезд Фабричный, д. 1Д</p>
             <p><strong className="text-foreground">Сайт:</strong> <a href="https://timell.ru" className="text-primary hover:underline">https://timell.ru</a></p>
           </div>
