@@ -69,7 +69,7 @@ const Footer = () => (
           <h4 className="font-bold text-sm mb-4 text-foreground">Контакты</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li><a href="mailto:info@timell.ru" className="hover:text-foreground transition-colors">info@timell.ru</a></li>
-            <li><a href="tel:84852974060" className="hover:text-foreground transition-colors">8 (485) 29-74-060</a></li>
+            <li><a href="tel:+79154495516" className="hover:text-foreground transition-colors">+7 915 449-55-16</a></li>
           </ul>
         </div>
       </div>
@@ -97,7 +97,7 @@ const Footer = () => (
           <p>Общество с ограниченной ответственностью «МЕРИДИАН»</p>
           <p>ИНН 5038182334 · КПП 503801001 · ОГРН 1235000110795</p>
           <p>141280, Россия, Московская область, г.о. Пушкинский, г. Ивантеевка, проезд Фабричный, д. 1Д</p>
-          <p>Телефон: 8 485 29 74 060 · E-mail: info@timell.ru</p>
+          <p>Телефон: +7 915 449-55-16 · E-mail: info@timell.ru</p>
         </div>
       </div>
     </div>
