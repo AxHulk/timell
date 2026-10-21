@@ -208,7 +208,7 @@ const About = () => (
             <li className="flex items-center gap-3"><Mail className="w-5 h-5 text-primary flex-shrink-0" /> <span>Для партнёрства: <a href="mailto:partners@timell.ru" className="text-primary hover:underline">partners@timell.ru</a></span></li>
             <li className="flex items-center gap-3"><Mail className="w-5 h-5 text-primary flex-shrink-0" /> <span>Для прессы: <a href="mailto:pr@timell.ru" className="text-primary hover:underline">pr@timell.ru</a></span></li>
             <li className="flex items-center gap-3"><Phone className="w-5 h-5 text-primary flex-shrink-0" /> <a href="tel:+74852974060" className="text-primary hover:underline">8 (485) 29-74-060</a></li>
-            <li className="flex items-center gap-3"><MapPin className="w-5 h-5 text-primary flex-shrink-0" /> <span>152612, Ярославская обл., г. Углич, мкр Солнечный 26а, кв. 4</span></li>
+            <li className="flex items-center gap-3"><MapPin className="w-5 h-5 text-primary flex-shrink-0" /> <span>141280, Московская обл., г.о. Пушкинский, г. Ивантеевка, проезд Фабричный, д. 1Д</span></li>
           </ul>
           <div className="flex items-center gap-4">
             <a href="https://vk.ru/vk_timell" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline font-medium">
@@ -223,13 +223,17 @@ const About = () => (
         <div className="space-y-8">
           <h2 className="text-2xl md:text-3xl font-bold font-display text-foreground">Реквизиты</h2>
           <div className="bg-muted/40 border border-border rounded-2xl p-6 text-sm text-muted-foreground space-y-2">
-            <p><strong className="text-foreground">Полное наименование:</strong> Индивидуальный предприниматель Мосичев Фёдор Владимирович</p>
-            <p><strong className="text-foreground">ИНН:</strong> 761203433802</p>
-            <p><strong className="text-foreground">Р/с:</strong> 40802810916000001496</p>
-            <p><strong className="text-foreground">Банк:</strong> АО «АЛЬФА-БАНК»</p>
-            <p><strong className="text-foreground">БИК:</strong> 044525593</p>
-            <p><strong className="text-foreground">К/с:</strong> 30101810200000000593</p>
-            <p><strong className="text-foreground">Адрес:</strong> 152612, Россия, Ярославская область, Угличский район, г. Углич, мкр Солнечный 26а, кв. 4</p>
+            <p><strong className="text-foreground">Полное наименование:</strong> Общество с ограниченной ответственностью «МЕРИДИАН»</p>
+            <p><strong className="text-foreground">Сокращённое наименование:</strong> ООО «МЕРИДИАН»</p>
+            <p><strong className="text-foreground">ИНН:</strong> 5038182334</p>
+            <p><strong className="text-foreground">КПП:</strong> 503801001</p>
+            <p><strong className="text-foreground">ОГРН:</strong> 1235000110795</p>
+            <p><strong className="text-foreground">Генеральный директор:</strong> Касатнова Софья Дмитриевна</p>
+            <p><strong className="text-foreground">Р/с:</strong> 40702810777000012940</p>
+            <p><strong className="text-foreground">Банк:</strong> ф-л ПАО «Банк «Санкт-Петербург» в г. Москве</p>
+            <p><strong className="text-foreground">БИК:</strong> 044525142</p>
+            <p><strong className="text-foreground">К/с:</strong> 30101810045250000142</p>
+            <p><strong className="text-foreground">Адрес:</strong> 141280, Россия, Московская область, г.о. Пушкинский, г. Ивантеевка, проезд Фабричный, д. 1Д</p>
             <p><strong className="text-foreground">Сайт:</strong> <a href="https://timell.ru" className="text-primary hover:underline">https://timell.ru</a></p>
           </div>
         </div>
