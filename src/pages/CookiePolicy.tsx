@@ -179,7 +179,7 @@ const CookiePolicy = () => (
         <ul className="list-none pl-0">
           <li><strong>ИНН:</strong> 5038182334</li>
           <li><strong>Адрес:</strong> 141280, Россия, Московская область, г.о. Пушкинский, г. Ивантеевка, проезд Фабричный, д. 1Д</li>
-          <li><strong>Телефон:</strong> <a href="tel:+74852974060">8(485)29-74-060</a></li>
+          <li><strong>Телефон:</strong> <a href="tel:+79154495516">+7 915 449-55-16</a></li>
           <li><strong>Email:</strong> <a href="mailto:privacy@timell.ru">privacy@timell.ru</a></li>
           <li><strong>Сайт:</strong> <a href="https://timell.ru">https://timell.ru</a></li>
         </ul>
