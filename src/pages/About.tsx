@@ -208,7 +208,7 @@ const About = () => (
             <li className="flex items-center gap-3"><Mail className="w-5 h-5 text-primary flex-shrink-0" /> <span>Для партнёрства: <a href="mailto:partners@timell.ru" className="text-primary hover:underline">partners@timell.ru</a></span></li>
             <li className="flex items-center gap-3"><Mail className="w-5 h-5 text-primary flex-shrink-0" /> <span>Для прессы: <a href="mailto:pr@timell.ru" className="text-primary hover:underline">pr@timell.ru</a></span></li>
             <li className="flex items-center gap-3"><Phone className="w-5 h-5 text-primary flex-shrink-0" /> <a href="tel:+74852974060" className="text-primary hover:underline">8 (485) 29-74-060</a></li>
-            <li className="flex items-center gap-3"><MapPin className="w-5 h-5 text-primary flex-shrink-0" /> <span>152612, Ярославская обл., г. Углич, мкр Солнечный 26а, кв. 4</span></li>
+            <li className="flex items-center gap-3"><MapPin className="w-5 h-5 text-primary flex-shrink-0" /> <span>141280, Московская обл., г.о. Пушкинский, г. Ивантеевка, проезд Фабричный, д. 1Д</span></li>
           </ul>
           <div className="flex items-center gap-4">
             <a href="https://vk.ru/vk_timell" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline font-medium">
