@@ -223,13 +223,13 @@ const About = () => (
         <div className="space-y-8">
           <h2 className="text-2xl md:text-3xl font-bold font-display text-foreground">Реквизиты</h2>
           <div className="bg-muted/40 border border-border rounded-2xl p-6 text-sm text-muted-foreground space-y-2">
-            <p><strong className="text-foreground">Полное наименование:</strong> Индивидуальный предприниматель Мосичев Фёдор Владимирович</p>
-            <p><strong className="text-foreground">ИНН:</strong> 761203433802</p>
+            <p><strong className="text-foreground">Полное наименование:</strong> Общество с ограниченной ответственностью «МЕРИДИАН»</p>
+            <p><strong className="text-foreground">ИНН:</strong> 5038182334</p>
             <p><strong className="text-foreground">Р/с:</strong> 40802810916000001496</p>
             <p><strong className="text-foreground">Банк:</strong> АО «АЛЬФА-БАНК»</p>
             <p><strong className="text-foreground">БИК:</strong> 044525593</p>
             <p><strong className="text-foreground">К/с:</strong> 30101810200000000593</p>
-            <p><strong className="text-foreground">Адрес:</strong> 152612, Россия, Ярославская область, Угличский район, г. Углич, мкр Солнечный 26а, кв. 4</p>
+            <p><strong className="text-foreground">Адрес:</strong> 141280, Россия, Московская область, г.о. Пушкинский, г. Ивантеевка, проезд Фабричный, д. 1Д</p>
             <p><strong className="text-foreground">Сайт:</strong> <a href="https://timell.ru" className="text-primary hover:underline">https://timell.ru</a></p>
           </div>
         </div>
