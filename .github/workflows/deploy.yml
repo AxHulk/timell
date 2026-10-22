@@ -1,52 +1,66 @@
 name: Deploy to VPS
+
 on:
   push:
     branches:
       - main
+
 concurrency:
   group: production-deploy
   cancel-in-progress: true
+
 jobs:
-  deploy-to-vps:
-    name: Синхронизация кода с веб-сервером
-    runs-on: [self-hosted, linux, x64, production]
+  build:
+    name: Build production bundle
+    runs-on: ubuntu-latest
+
     steps:
-      - name: 1. Клонирование репозитория
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: 2. Установка Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 22
+          cache: npm
 
-      - name: 3. Установка зависимостей
-        run: npm install
+      - name: Install dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
 
-      - name: 4. Сборка проекта
+      - name: Build
         run: npm run build
 
-      - name: 5. Синхронизация файлов (rsync)
-        run: |
-          rsync -avz --delete \
-            --exclude=".git/" \
-            --exclude=".github/" \
-            --exclude="node_modules/" \
-            --exclude=".env" \
-            ${{ github.workspace }}/dist/ /var/www/timell/dist/
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: timell-dist
+          path: dist
+          if-no-files-found: error
+          retention-days: 3
 
-      - name: 6. Исправление прав доступа
-        run: |
-          sudo find /var/www/timell/dist -type d -exec chmod 755 {} \;
-          sudo find /var/www/timell/dist -type f -exec chmod 644 {} \;
-          sudo chown -R github-runner:www-data /var/www/timell/dist
+  deploy:
+    name: Deploy artifact to VPS
+    needs: build
+    runs-on: [self-hosted, linux, x64, timell-vps]
 
-      - name: 6.5. Обновление конфигурации Nginx
-        run: |
-          sudo cp ${{ github.workspace }}/nginx/timell.conf /etc/nginx/sites-available/timell.ru.conf
-          sudo ln -sf /etc/nginx/sites-available/timell.ru.conf /etc/nginx/sites-enabled/timell.ru.conf
-          sudo nginx -t
+    steps:
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: timell-dist
+          path: dist
 
-      - name: 7. Перезапуск Nginx
-        run: sudo systemctl restart nginx.service
+      - name: Sync dist to Nginx root
+        run: |
+          set -e
+          rsync -a --delete \
+            --chmod=Du=rwx,Dg=rwx,Do=rx,Fu=rw,Fg=rw,Fo=r \
+            dist/ /var/www/timell/dist/
+
+      - name: Validate and reload Nginx
+        run: |
+          set -e
+          sudo /usr/sbin/nginx -t
+          sudo /bin/systemctl reload nginx.service
